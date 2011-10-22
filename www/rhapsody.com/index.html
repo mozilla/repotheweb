@@ -1,0 +1,19 @@
+<html>
+<head><title>Rhapsody! (No Seriously)</title>
+</head>
+<body>
+<h3>Rhapsody Web App</h3>
+<p>Make Rhapsody work really well across the web. Install as a webapp now, no restart!</p>
+<button id="install">Install Rhapsody</button>
+<script src="jquery-1.6.1.min.js"></script>
+<script src="http://dev.repo-the-web.org:8001/include.js?k3l2432lj4"></script>
+<script>
+$(document).ready(function () {
+    $('#install').click(function () {
+        var url = 'http://' + window.location.host + '/rph/relay.html?uri=%s';
+        window.navigator.xregisterProtocolHandler('music', url, 'Music');
+    });
+});
+</script>
+</body>
+</html>

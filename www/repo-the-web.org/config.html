@@ -1,0 +1,29 @@
+<html>
+<head><title>RePo Config</title>
+</head>
+<body>
+<ul id="protocols">
+
+</ul>
+<script src="jquery-1.6.1.min.js"></script>
+<script>
+    var raw_ph_list = localStorage.getItem('protocolhandler-list'),
+    ph_list = JSON.parse(raw_ph_list);
+
+    for (var scheme in ph_list) {
+        var rphs = JSON.parse(localStorage.getItem('protocolhandlers-' + scheme)),
+            content;
+            content = "<li><h3>" + scheme + "</h3><ul>";
+
+        for (var j=0; j < rphs[scheme].length; j++) {
+            var rph = rphs[scheme][j];
+;
+            content += "<li><strong>" + 
+                          rph.title + "</strong> (" + 
+                          rph.url + ")</li>";
+        }
+        $('#protocols').append(content + "</ul></li>");
+    }
+</script>
+</body>
+</html>
