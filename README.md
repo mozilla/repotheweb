@@ -24,7 +24,7 @@ Visit [Fake Rhapsody](http://dev.rhapsody.com:8002/) and "Install Rhapsody"
 Visit [Repo The Web config](http://dev.repotheweb.org:8001/config.html) to see installed handlers
 TODO Choose defaults, un-install apps, etc.
 
-TODO Visit [Fake Music Blog](http://music-blog.com:8002/index.html) to use music: links.
+TODO Visit [Fake Music Blog](http://music-blog.com:8003/index.html) to use music: links.
 
 ##RePo Shim Usage##
 
