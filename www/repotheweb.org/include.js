@@ -1,7 +1,11 @@
 $(document).ready(function () {
 
+
+
+    /* BEGIN xregisterProtocolHandler */
 if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
-    var ipServer = 'http://dev.repotheweb.org:8001';
+    var ipServer = 'http://dev.repotheweb.org:8001',
+        simulate_rph;
 
   //--- local embedded copy of jschannel: http://github.com/mozilla/jschannel
   var Channel = (function() {
@@ -10,7 +14,7 @@ if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIs
     // channel instances.  That means of all messages posted from a single javascript
     // evaluation context, we'll never have two with the same id.
     var s_curTranId = Math.floor(Math.random()*1000001);
-    
+
     // no two bound channels in the same javascript evaluation context may have the same origin & scope.
     // futher if two bound channels have the same scope, they may not have *overlapping* origins
     // (either one or both support '*').  This restriction allows a single onMessage handler to efficiently
@@ -518,6 +522,9 @@ if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIs
       }
     };
   })();
+
+
+
   // TODO include browserid/static/resources/jschannels.js
   //---- end of local embedded copy of jschannel
 
@@ -531,7 +538,6 @@ if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIs
             return iframe;
         };
 
-
     navigator.xregisterProtocolHandler = function (scheme, url, title) {
         // Prompt user, if conset, store locally
         var domain_parts, domain,
@@ -539,7 +545,7 @@ if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIs
             iframe = _open_hidden_iframe(doc);
         /* TODO: nuke _open_relay_frame(doc); */
 
-       // clean up a previous channel that never was reaped
+        // clean up a previous channel that never was reaped
         if (chan) chan.destroy();
         chan = Channel.build({window: iframe.contentWindow, origin: '*', scope: "mozid"});
 
@@ -561,19 +567,89 @@ if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIs
         }
         domain = domain_parts[2];
         // Simulate hanger notification
-        if (confirm("Add " + title + "(" + domain + ") as an application for " + 
+        if (confirm("Add " + title + "(" + domain + ") as an application for " +
                     scheme + " links?")) {
             chan.call({
                 method: "registerProtocolHandler",
-                params: {scheme: scheme, url: url, title:title, default:false},
+                params: {scheme: scheme, url: url, title:title, default:true},
                 success: function (rv) {
                     cleanup();
                 },
                 error: function(code, msg) {
-                    
+
                 }
             });//chan.call
         }// if confirm
 
-    navigator._registerProtocolHandlerIsShimmed = true;
-}}})
+        navigator._registerProtocolHandlerIsShimmed = true;
+    
+    }; /* END xregisterProtocolHandler */
+
+    /* BEGIN registerProtocolHandler simulator
+     *
+     * When a user clicks a link that isn't a standard
+     * internet protocol, this code will look in localStorage for a registered protocol handler. If one is found, the href of the link is re-written to the handler's url.
+     */
+    simulate_rph = function (e) {
+        var this_url = $(this).attr('href'),
+            this_scheme = this_url.split(':')[0],
+            official_schemes = [
+                'http', 'https', 'mailto', 'ftp', 'gopher'
+            ], //gopher, I kid, I kid
+            prtcl_hndlr;
+e.preventDefault();
+        if (this_url.indexOf(official_schemes) != -1) {
+            return false;
+        }
+        // ensure handler_list exists
+        e.preventDefault();
+        run_protocol_handler(this_scheme, this_url);        
+    };
+
+    $('a').click(simulate_rph);
+
+    /**
+     * Asynchonous function to run the user's protocol handler or passthrough to browser. 
+     * Method cancels the current event.
+     *
+     * scheme - string - A scheme for a non-standard URI
+     * orig_url - string - The original non-standard URL
+     * Return - void, async
+     */
+    run_protocol_handler = function (scheme, orig_url) {
+        var iframe = _open_hidden_iframe(window.document);
+        // clean up a previous channel that never was reaped
+        if (chan) chan.destroy();
+        chan = Channel.build({window: iframe.contentWindow, origin: '*', scope: "mozid"});
+
+        function cleanup() {
+            chan.destroy();
+            chan = undefined;
+            if (iframe.close) iframe.close();
+            if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+        }
+
+        // TODO caller semantics... async or sync. Leak handlers into 3rd party sites to pre-load?
+        chan.call({
+            method: "protocolHandler",
+            params: {scheme: scheme, url: orig_url},
+            success: function (new_url) {
+
+                cleanup();
+                if (new_url === false) {
+                    window.location = orig_url;
+                } else {
+                    window.location = new_url;
+                }
+            },
+            error: function(code, msg) {
+
+            }
+        });//chan.call
+    };
+
+
+
+    /* END registerProtocolHandler simulator */
+}})
+

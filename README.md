@@ -19,12 +19,14 @@ Add the following to 127.0.0.1 entry
     $ cd www/music-blog.com/
     $ python -m SimpleHTTPServer 8003
 
-Visit [Fake Rhapsody](http://dev.rhapsody.com:8002/) and "Install Rhapsody"
+Demos:
 
-Visit [Repo The Web config](http://dev.repotheweb.org:8001/config.html) to see installed handlers
-TODO Choose defaults, un-install apps, etc.
+* [Fake Rhapsody](http://dev.rhapsody.com:8002/) and "Install Rhapsody".
 
-TODO Visit [Fake Music Blog](http://music-blog.com:8003/index.html) to use music: links.
+* [Fake Music Blog](http://music-blog.com:8003/index.html) to use music links. Note: Fake bitcoin link to see what an unknown protocol does.
+
+* [Repo The Web config](http://dev.repotheweb.org:8001/config.html) to see installed handlers.
+** TODO Choose defaults, un-install apps, etc.
 
 ##RePo Shim Usage##
 
