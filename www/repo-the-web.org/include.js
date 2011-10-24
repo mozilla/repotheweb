@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
 if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
-    var ipServer = 'http://dev.repo-the-web.org:8001';
+    var ipServer = 'http://dev.repotheweb.org:8001';
 
   //--- local embedded copy of jschannel: http://github.com/mozilla/jschannel
   var Channel = (function() {
