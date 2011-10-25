@@ -7,7 +7,7 @@ Demo:
 
 1. Go to [Fake Rhapsody](http://austinking.us/fake_rhapsody/) and "Install Rhapsody".
 2. Go to [Fake Music Blog](http://ozten.com/random/fake_blog_post/) and click one of the music links. Note: Fake bitcoin link to see what an unknown protocol does.
-3. [Repo The Web config](http://dev.repotheweb.org:8001/config.html) to see installed handlers or to delete them all.
+3. [Repo The Web config](http://bewehtoper.org/config.html) to see installed handlers or to delete them all.
 
 ##RePo Shim Usage##
 
