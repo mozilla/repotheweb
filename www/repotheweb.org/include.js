@@ -4,7 +4,7 @@ $(document).ready(function () {
 
     /* BEGIN xregisterProtocolHandler */
 if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
-    var ipServer = 'http://dev.repotheweb.org:8001',
+    var ipServer = 'http://repotheweb.org',
         simulate_rph;
 
   //--- local embedded copy of jschannel: http://github.com/mozilla/jschannel

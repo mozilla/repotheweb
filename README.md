@@ -9,6 +9,9 @@ Add the following to 127.0.0.1 entry
 
     127.0.0.1 localhost my-machine dev.rhapsody.com dev.repotheweb.org music-blog.com
 
+    $ emacs bin/update.sh
+    $ bin/update.sh
+
     # new terminal 1
     $ cd www/repotheweb.org/
     $ python -m SimpleHTTPServer 8001
