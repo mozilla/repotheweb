@@ -1,17 +1,26 @@
 <html>
-<head><title>Rhapsody! (No Seriously)</title>
+<head><title>Rhapsody! (Okay a fake for a demo)</title>
+<style>
+iframe { position: absolute; left: -400px; }
+</style>
 </head>
-<body>
-<h3>Rhapsody Web App</h3>
-<p>Make Rhapsody work really well across the web. Install as a webapp now, no restart!</p>
-<button id="install">Install Rhapsody</button>
+<body style="background: url(Rhapsody_home.jpg) no-repeat;">
+<div style="width: 300px; position: absolute; top: 300px; left: 300px; padding: 20px; text-align: center; background-color: yellow; color: #666; border: solid 1px #666">
+  <h2 class="header-title" style="font-weight: bold">Rhapsody Web App</h2>
+  <p style="clear: both; text-align: left">Make Rhapsody work really well across the web. Install as a webapp now, no restart!</p>
+
+  <button id="install">Install Rhapsody</button>
+
+</div>
+
 <script src="jquery-1.6.1.min.js"></script>
-<script src="http://dev.repotheweb.org:8001/include.js?k3l2432lj4"></script>
+<script src="http://repotheweb.org/include.js"></script>
 <script>
 $(document).ready(function () {
     $('#install').click(function () {
-        var url = 'http://' + window.location.host + '/rph/relay.html?uri=%s';
+        var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
         window.navigator.xregisterProtocolHandler('music', url, 'Music');
+        $('.header-title').remove();
     });
 });
 </script>

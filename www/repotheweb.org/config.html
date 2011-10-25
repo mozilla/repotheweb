@@ -5,6 +5,7 @@
 <ul id="protocols">
 
 </ul>
+<button id="delete-all">Delete All Handlers</button>
 <script src="jquery-1.6.1.min.js"></script>
 <script>
     var raw_ph_list = localStorage.getItem('protocolhandler-list'),
@@ -24,6 +25,17 @@
         }
         $('#protocols').append(content + "</ul></li>");
     }
+$(document).ready(function () {
+    $('#delete-all').click(function () {
+        var raw_ph_list = localStorage.getItem('protocolhandler-list'),
+        ph_list = JSON.parse(raw_ph_list);
+        for (var scheme in ph_list) {
+            localStorage.removeItem('protocolhandlers-' + scheme);
+        }
+        localStorage.removeItem('protocolhandler-list');
+        $('#protocols li').remove();
+    });
+});
 </script>
 </body>
 </html>
