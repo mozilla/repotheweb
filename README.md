@@ -43,6 +43,11 @@ Add the following to 127.0.0.1 entry
     $ cd www/music-blog.com/
     $ python -m SimpleHTTPServer 8003
 
+    # build
+    $ cd src
+    $ node ../lib/r.js -o baseUrl=. name=../lib/almond.js include=include out=../www/repotheweb.org/include.js wrap=true optimize=''
+
+
 * [Fake Rhapsody](http://dev.rhapsody.com:8002/) and "Install Rhapsody".
 
 * [Fake Music Blog](http://music-blog.com:8003/index.html) to use music links. Note: Fake bitcoin link to see what an unknown protocol does.

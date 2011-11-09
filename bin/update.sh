@@ -1,7 +1,7 @@
 #!/bin/bash
 # Usage: Edit then run update.sh. Changes JavaScript to  rewrite hostnames.
 # Edit these values to match your environment
-REPO_PATH=/home/ozten/Projects/repotheweb
+REPO_PATH=/home/ozten/Projects/repo_the_web
 HOSTNAME=dev.repotheweb.org:8001
 
 # Do not edit below this line
