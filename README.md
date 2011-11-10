@@ -30,6 +30,7 @@ Add the following to 127.0.0.1 entry
 
     127.0.0.1 localhost my-machine dev.rhapsody.com dev.repotheweb.org music-blog.com
 
+    $ cp src/config.js-dist src/config.js
     $ emacs bin/update.sh
     $ bin/update.sh
 
@@ -46,6 +47,8 @@ Add the following to 127.0.0.1 entry
     # build
     $ cd src
     $ node ../lib/r.js -o baseUrl=. name=../lib/almond.js include=include out=../www/repotheweb.org/include.js wrap=true optimize=''
+    # Optional
+    $ node ../lib/r.js -o baseUrl=. name=../lib/almond.js include=include out=../www/repotheweb.org/include.min.js wrap=true
 
 
 * [Fake Rhapsody](http://dev.rhapsody.com:8002/) and "Install Rhapsody".

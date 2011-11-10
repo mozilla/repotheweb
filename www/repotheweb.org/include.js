@@ -774,7 +774,7 @@ define('jschannels', {
   // TODO include browserid/static/resources/jschannels.js
 });
 define('config', {
-  ipServer: 'http://dev.repotheweb.org:8001',
+  ipServer: 'http://repotheweb.org',
   chan: undefined
 });
 define('utils', ['config'], function (config) {
