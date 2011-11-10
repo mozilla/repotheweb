@@ -2,7 +2,7 @@
 /*global require: true, navigator: true, window: true */
 
 require(
-    ['jschannels', 'simulator', 'utils', 'config'], 
+    ['json-storage', 'jschannels', 'simulator', 'utils', 'config'], 
     function (jschannels, sim, utils, config) {
         var init = function () {
             if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
