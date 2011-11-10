@@ -54,7 +54,8 @@ require(
 
             document.onclick = function(e) {
                 e |= window.event;
-                
+                target = e.target | e.srcElement;
+                sim.simulate_rph.call(target, e);
             }
 
         } // end if
