@@ -55,6 +55,7 @@ require(
             document.onclick = function(e) {
                 e |= window.event;
                 target = e.target | e.srcElement;
+                if (target.nodeName != "a") return;
                 sim.simulate_rph.call(target, e);
             }
 
