@@ -1,10 +1,16 @@
-
 (function() {
     var chan = Channel.build({
         window: window.parent,
         origin: "*",
         scope: "mozid"
     }),
+     /**
+      * rph - protocolHandler object
+      * {scheme: 'music',
+      *  url: 'http://example.com/%s',
+      *  default: false
+      * }
+      */
     store_rph = function (rph) {
         var key,
             raw_phs,
@@ -14,6 +20,14 @@
             hasPRH;
         key = 'protocolhandlers-' + rph.scheme;
         raw_phs = localStorage.getItem(key);
+        /* raw_phs format:
+         * [
+         *   { scheme: 'music',
+         *     url: 'http://example.com/%s',
+         *     default: false
+         *   }, ...
+         * ]
+         */
         hasRPH = function (rph_list, rph) {
             for (var i=0; i < rph_list.length; i++) {
                 if (rph_list[i].url == rph.url) {
@@ -23,36 +37,33 @@
             return false;
         };
         if (! raw_phs) {
-            phs = {};
+            phs = [];
         } else {
             phs = JSON.parse(raw_phs);
         }
-        if (! phs[rph.scheme]) {
-            phs[rph.scheme] = [];
-        }
-/* {"music":[
-  {"scheme":"music","url":"http://dev.rhapsody.com:8003/rph/relay.html?uri=%s","title":"Rhapsody","default":true},
-  {"scheme":"music","url":"http://dev.spotify.com:8004/rph?uri=%s","title":Spotify","default":false}
-]} */
-        if (! hasRPH(phs, rph)) {
-            phs[rph.scheme].push(rph);
-        }
-        localStorage.setItem(key, JSON.stringify(phs));
 
-        /* Maintain a cache of schemes */
-        raw_ph_list = localStorage.getItem('protocolhandler-list');
-        if (! raw_ph_list) {
-            ph_list = {};
-        } else {
-            ph_list = JSON.parse(raw_ph_list);
-        }
-        if (! ph_list[rph.scheme]) {
-            ph_list[rph.scheme] = true;
-            localStorage.setItem('protocolhandler-list', JSON.stringify(ph_list));
+        if (! hasRPH(phs, rph)) {
+            phs.push(rph);
+            localStorage.setItem(key, JSON.stringify(phs));
+
+            /* Maintain a cache of schemes
+             * raw_ph_list format:
+             * { music: true, bitcoin: true }
+             */
+            raw_ph_list = localStorage.getItem('protocolhandler-list');
+            if (! raw_ph_list) {
+                ph_list = {};
+            } else {
+                ph_list = JSON.parse(raw_ph_list);
+            }
+            if (! ph_list[rph.scheme]) {
+                ph_list[rph.scheme] = true;
+                localStorage.setItem('protocolhandler-list', JSON.stringify(ph_list));
+            }
         }
     }, /* store_rph */
     /**
-     * Looks in localStorage for the user's preferred 
+     * Looks in localStorage for the user's preferred
      * protocol handler for the given scheme. If they don't
      * have a default, it prompts the user to choose one.
      * If no protocol handler is found, false is returned.
@@ -83,7 +94,7 @@
             raw_handlers = JSON.parse(ls.getItem(key));
             if (raw_handlers === null) {
                 alert('Programming error, no handlers found for ' + scheme);
-            }            
+            }
             handlers = raw_handlers[scheme];
             for (var i=0; i < handlers.length; i++) {
                 var ph = handlers[i];
@@ -128,10 +139,10 @@
      *
      * handler - protocol handler object {scheme, url, title, default}
      * url - String which is a URL with a non-standard scheme.
-     * Returns a string which is the normalized url. 
+     * Returns a string which is the normalized url.
      *
      * Example - Given the following protocol handler and url:
-     *     handler - {scheme: 'bitcoin', url: 'https://bitcointoday.info/transaction/%s', 
+     *     handler - {scheme: 'bitcoin', url: 'https://bitcointoday.info/transaction/%s',
                       title: 'Bitcoin Today', default: true}
      *     url - 'bitcoin:tx/f5d8ee39a430901c91a5917b9f2dc19d6d1a0e9cea205b009ca73dd04470b9a6'
      * We would get back:
