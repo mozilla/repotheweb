@@ -47,7 +47,7 @@ define(
                 chan = config.chan;
                 // clean up a previous channel that never was reaped
                 if (chan) chan.destroy();
-                chan = jschannels.Channel.build({window: iframe.contentWindow, origin: '*', scope: "mozid"});
+                chan = jschannels.Channel.build({'window': iframe.contentWindow, 'origin': '*', 'scope': "mozid"});
 
                 function cleanup() {
                     chan.destroy();
@@ -59,9 +59,9 @@ define(
                 // TODO caller semantics... async or sync. Leak handlers into 3rd party sites to pre-load?
                 chan.call(
                     {
-                        method: "protocolHandler",
-                        params: {scheme: scheme, url: orig_url},
-                        success: function (new_url) {
+                        'method': "protocolHandler",
+                        'params': {'scheme': scheme, 'url': orig_url},
+                        'success': function (new_url) {
                             //TODO rph_iframe.js DRY
                             var rewrite_url = function (handler_url, url) {
                                     var parts = handler_url.split('%s');
@@ -79,7 +79,7 @@ define(
                                 window.location = new_url;
                             }
                         },
-                        error: function(code, msg) {
+                        'error': function(code, msg) {
 
                         }
                     }); //chan.call
