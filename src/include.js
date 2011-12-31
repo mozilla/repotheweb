@@ -9,7 +9,7 @@ require(
                 // Prompt user, if conset, store locally
                 var domain_parts, domain,
                 doc = window.document,
-                iframe = utils._open_hidden_iframe(doc),
+                iframe = utils.iframe,
                 chan = config.chan;
 
                 // clean up a previous channel that never was reaped
@@ -18,9 +18,7 @@ require(
 
                 function cleanup() {
                     chan.destroy();
-                    chan = undefined;
-                    if (iframe.close) iframe.close();
-                    iframe.parentNode.removeChild(iframe);
+                    config.chan = undefined;
                 }
 
                 if (url.indexOf("%s") == -1) {
@@ -57,7 +55,7 @@ require(
                 if (e.target) target = e.target
 		else target = e.srcElement;
                 if (target.nodeName.toLowerCase() != "a") return;
-                sim.simulate_rph.call(target, e);
+                return sim.simulate_rph.call(target, e);
             }
 
         } // end if

@@ -779,16 +779,21 @@ define('config', {
 });
 define('utils', ['config'], 
        function (config) {
+           var doc = document,
+             iframe = doc.createElement("iframe");
+           // iframe.style.display = "none";
+           doc.body.appendChild(iframe);
+           iframe.src = config.ipServer + "/rph_iframe.html";
+           iframe.style.position = 'absolute';
+           iframe.style.left = -7000;
+
            return {
-               _open_hidden_iframe: function (doc) {
-                   var iframe = doc.createElement("iframe");
-                   // iframe.style.display = "none";
-                   doc.body.appendChild(iframe);
-                   iframe.src = config.ipServer + "/rph_iframe.html";
+               _open_hidden_iframe: function () {
                    return iframe;
                }
            };
        });
+
 define(
     'simulator',
     ['config', 'jschannels', 'utils'],
@@ -815,15 +820,13 @@ define(
                     prtcl_hndlr,
                     _ = require('simulator'),
                     fallback;
-                e.preventDefault();
                 if (this_url.indexOf(official_schemes) != -1) {
                     return false;
                 }
                 // ensure handler_list exists
-                e.preventDefault();
                 fallback = $('meta[name=fallback-rph][protocol=' + this_scheme + ']', $(this).parents('html')).attr('content');
                 _.run_protocol_handler(this_scheme, this_url, fallback);
-                return true;
+                return false;
             }, /* simulate_rph */
             /**
              * Asynchonous function to run the user's protocol handler or passthrough to browser.
@@ -871,7 +874,7 @@ define(
                             }
                         },
                         'error': function(code, msg) {
-
+			    alert(code +"\n"+msg);
                         }
                     }); //chan.call
             } /* run_protocol_handler */
@@ -937,7 +940,7 @@ require(
                 if (e.target) target = e.target
 		else target = e.srcElement;
                 if (target.nodeName.toLowerCase() != "a") return;
-                sim.simulate_rph.call(target, e);
+                return sim.simulate_rph.call(target, e);
             }
 
         } // end if

@@ -24,15 +24,13 @@ define(
                     prtcl_hndlr,
                     _ = require('simulator'),
                     fallback;
-                e.preventDefault();
                 if (this_url.indexOf(official_schemes) != -1) {
                     return false;
                 }
                 // ensure handler_list exists
-                e.preventDefault();
                 fallback = $('meta[name=fallback-rph][protocol=' + this_scheme + ']', $(this).parents('html')).attr('content');
                 _.run_protocol_handler(this_scheme, this_url, fallback);
-                return true;
+                return false;
             }, /* simulate_rph */
             /**
              * Asynchonous function to run the user's protocol handler or passthrough to browser.
@@ -43,7 +41,7 @@ define(
              * Return - void, async
              */
             run_protocol_handler: function (scheme, orig_url, fallback) {
-                var iframe = utils._open_hidden_iframe(window.document),
+                var iframe = utils.iframe,
                 chan = config.chan;
                 // clean up a previous channel that never was reaped
                 if (chan) chan.destroy();
@@ -51,9 +49,7 @@ define(
 
                 function cleanup() {
                     chan.destroy();
-                    chan = undefined;
-                    if (iframe.close) iframe.close();
-                    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+                    config.chan = undefined;
                 };
 
                 // TODO caller semantics... async or sync. Leak handlers into 3rd party sites to pre-load?
@@ -80,7 +76,7 @@ define(
                             }
                         },
                         'error': function(code, msg) {
-
+			    alert(code +"\n"+msg);
                         }
                     }); //chan.call
             } /* run_protocol_handler */
