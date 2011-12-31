@@ -7,7 +7,7 @@
 <script type="text/javascript">
 	function makeDefault(scheme) {
 		var rphs = data('protocolhandlers-' + scheme),
-			$li = $('scheme-'+scheme+' > ul > li');
+			$li = $('#scheme-'+scheme+' > ul > li');
 		$li.each(function(i) {
 			rphs[i].defaultH = $(this).attr('checked');
 		});
@@ -24,9 +24,9 @@
 <script type="text/template">
 	<h1>{{= _("Protocol Handlers") }}</h1>
 	<ul>{{ each(data('protocolhandler-list'), function(scheme) { }}
-		<li id="scheme-{{= scheme }}>"><h3>{{= scheme }}</h3>
+		<li id="scheme-{{= scheme }}"><h3>{{= scheme }}</h3>
 			<input type="radio" name="default-{{= scheme }}" value="-1"
-				onclick="makeDefault({{= scheme }});"> Select handler each time
+				onclick="makeDefault('{{= scheme }}');"> Select handler each time
 			<ul>
 			{{ each(data('protocolhandlers-' + scheme), function(i) { }}
 				<li>
