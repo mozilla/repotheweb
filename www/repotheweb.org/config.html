@@ -7,18 +7,29 @@
 <script type="text/javascript">
 	function makeDefault(scheme) {
 		var rphs = data('protocolhandlers-' + scheme),
-			$li = $('#scheme-'+scheme+' > ul > li');
+			$li = $('#scheme-'+scheme+' > ul > li > :radio');
 		$li.each(function(i) {
-			rphs[i].defaultH = $(this).attr('checked');
+			var checked = $(this).is(':checked');
+			rphs[i].defaultH = checked;
 		});
 		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
 	}
 	function remove(li, scheme, i) {
-			var rphs = data('protocolhandlers-'+scheme);
-			rphs = rphs.splice(i, 1);
-			localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
+			var key = 'protocolhandlers-'+scheme,
+				rphs = data(key);
+			rphs.splice(i, 1);
+			localStorage.setItem(key, JSON.stringify(rphs));
 
-			$(li).detach();
+			// Remove list if empty
+			if (!rphs.length) {
+				localStorage.removeItem(key);
+				// Remove from list
+				var schemes = data('protocolhandlers-list');
+				schemes.splice(schemes.indexOf(scheme), 1);
+				localStorage.setItem('protocolhandlers-list', JSON.stringify(schemes));
+			}
+
+			$(li).remove();
 	}
 </script>
 <script type="text/template">
@@ -30,7 +41,7 @@
 			<ul>
 			{{ each(data('protocolhandlers-' + scheme), function(i) { }}
 				<li>
-					<input type="radio" {{if (this.defaultH) print('checked="checked"'); }}
+					<input type="radio" {{if (this.defaultH) { }}checked="checked"{{ } }}
 						name="default-{{= scheme }}" value="{{= i }}"
 						onclick="makeDefault('{{= scheme }}');">
 					<strong>{{= this.title }}</strong> ({{= this.url }})

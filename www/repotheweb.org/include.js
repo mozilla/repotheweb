@@ -777,7 +777,7 @@ define('config', {
   ipServer: 'http://dev.repotheweb.org:8001',
   chan: undefined
 });
-define('utils', ['config'], 
+define('utils', ['config'],
        function (config) {
            var doc = document,
              iframe = doc.createElement("iframe");
@@ -788,11 +788,11 @@ define('utils', ['config'],
            iframe.style.left = -7000;
 
            return {
-               _open_hidden_iframe: function () {
-                   return iframe;
-               }
+               iframe: iframe,
            };
        });
+
+
 
 define(
     'simulator',
@@ -800,17 +800,17 @@ define(
     function (config, jschannels, utils) {
         return {
             /* BEGIN registerProtocolHandler simulator
-             *
-             * When a user clicks a link that isn't a standard
-             * internet protocol, this code will:
-             * 1) Look in localStorage for a registered protocol handler
-             * 2) Look in the current html document for a fallback meta tag
-             *
-             * If a protocol handler is found, the href of the link is
-             * re-written to the handler's url.
-             *
-             * If none are found, pass-through to the browser
-             */
+*
+* When a user clicks a link that isn't a standard
+* internet protocol, this code will:
+* 1) Look in localStorage for a registered protocol handler
+* 2) Look in the current html document for a fallback meta tag
+*
+* If a protocol handler is found, the href of the link is
+* re-written to the handler's url.
+*
+* If none are found, pass-through to the browser
+*/
             simulate_rph: function (e) {
                 var this_url = $(this).attr('href'),
                     this_scheme = this_url.split(':')[0],
@@ -829,15 +829,15 @@ define(
                 return false;
             }, /* simulate_rph */
             /**
-             * Asynchonous function to run the user's protocol handler or passthrough to browser.
-             * Method cancels the current event.
-             *
-             * scheme - string - A scheme for a non-standard URI
-             * orig_url - string - The original non-standard URL
-             * Return - void, async
-             */
+* Asynchonous function to run the user's protocol handler or passthrough to browser.
+* Method cancels the current event.
+*
+* scheme - string - A scheme for a non-standard URI
+* orig_url - string - The original non-standard URL
+* Return - void, async
+*/
             run_protocol_handler: function (scheme, orig_url, fallback) {
-                var iframe = utils._open_hidden_iframe(window.document),
+                var iframe = utils.iframe,
                 chan = config.chan;
                 // clean up a previous channel that never was reaped
                 if (chan) chan.destroy();
@@ -845,9 +845,7 @@ define(
 
                 function cleanup() {
                     chan.destroy();
-                    chan = undefined;
-                    if (iframe.close) iframe.close();
-                    if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+                    config.chan = undefined;
                 };
 
                 // TODO caller semantics... async or sync. Leak handlers into 3rd party sites to pre-load?
@@ -874,17 +872,19 @@ define(
                             }
                         },
                         'error': function(code, msg) {
-			    alert(code +"\n"+msg);
+alert(code +"\n"+msg);
                         }
                     }); //chan.call
             } /* run_protocol_handler */
         };
     });
 
+
+
 /*jslint strict: false, plusplus: false */
 /*global require: true, navigator: true, window: true */
 require(
-    ['jschannels', 'simulator', 'utils', 'config'], 
+    ['jschannels', 'simulator', 'utils', 'config'],
     function (jschannels, sim, utils, config) {
         if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
             var simulate_rph;
@@ -892,7 +892,7 @@ require(
                 // Prompt user, if conset, store locally
                 var domain_parts, domain,
                 doc = window.document,
-                iframe = utils._open_hidden_iframe(doc),
+                iframe = utils.iframe,
                 chan = config.chan;
 
                 // clean up a previous channel that never was reaped
@@ -901,9 +901,7 @@ require(
 
                 function cleanup() {
                     chan.destroy();
-                    chan = undefined;
-                    if (iframe.close) iframe.close();
-                    iframe.parentNode.removeChild(iframe);
+                    config.chan = undefined;
                 }
 
                 if (url.indexOf("%s") == -1) {
@@ -935,10 +933,10 @@ require(
             }
 
             document.onclick = function(e) {
-		var target;
+var target;
                 if (!e) e = window.event;
                 if (e.target) target = e.target
-		else target = e.srcElement;
+else target = e.srcElement;
                 if (target.nodeName.toLowerCase() != "a") return;
                 return sim.simulate_rph.call(target, e);
             }

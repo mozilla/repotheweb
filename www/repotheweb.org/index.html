@@ -1,0 +1,26 @@
+<html>
+<head><title>Select Service</title></head>
+<body>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript">
+	var url = unescape(location.hash),
+		scheme = url.split(':')[0];
+
+	// Redirect if there's only one choice or a default
+</script>
+<script type="text/template">
+	<header>
+		<h1>{{= _('select Handler', scheme) }}</h1>
+		<h2>{{= url }}</h2>
+		<p><a href="/config" title="{{= _('configTooltip') }}">Configure all handlers</a></p>
+	</header>
+	<ul>
+		{{ each(data('protocolhandlers-'+scheme, function() { }}
+			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="Open link with {{= this.title }}">
+				<strong>{{= this.title }}</strong> ({{= this.domain }})</a></li>
+		{{ }); }}
+	</ul>
+</script>
+</body>
+</html>

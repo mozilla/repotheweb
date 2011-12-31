@@ -1,7 +1,7 @@
 /*jslint strict: false, plusplus: false */
 /*global require: true, navigator: true, window: true */
 require(
-    ['jschannels', 'simulator', 'utils', 'config'], 
+    ['jschannels', 'simulator', 'utils', 'config'],
     function (jschannels, sim, utils, config) {
         if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
             var simulate_rph;
@@ -50,10 +50,10 @@ require(
             }
 
             document.onclick = function(e) {
-		var target;
+var target;
                 if (!e) e = window.event;
                 if (e.target) target = e.target
-		else target = e.srcElement;
+else target = e.srcElement;
                 if (target.nodeName.toLowerCase() != "a") return;
                 return sim.simulate_rph.call(target, e);
             }

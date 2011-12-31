@@ -4,17 +4,17 @@ define(
     function (config, jschannels, utils) {
         return {
             /* BEGIN registerProtocolHandler simulator
-             *
-             * When a user clicks a link that isn't a standard
-             * internet protocol, this code will:
-             * 1) Look in localStorage for a registered protocol handler
-             * 2) Look in the current html document for a fallback meta tag
-             *
-             * If a protocol handler is found, the href of the link is
-             * re-written to the handler's url.
-             *
-             * If none are found, pass-through to the browser
-             */
+*
+* When a user clicks a link that isn't a standard
+* internet protocol, this code will:
+* 1) Look in localStorage for a registered protocol handler
+* 2) Look in the current html document for a fallback meta tag
+*
+* If a protocol handler is found, the href of the link is
+* re-written to the handler's url.
+*
+* If none are found, pass-through to the browser
+*/
             simulate_rph: function (e) {
                 var this_url = $(this).attr('href'),
                     this_scheme = this_url.split(':')[0],
@@ -33,13 +33,13 @@ define(
                 return false;
             }, /* simulate_rph */
             /**
-             * Asynchonous function to run the user's protocol handler or passthrough to browser.
-             * Method cancels the current event.
-             *
-             * scheme - string - A scheme for a non-standard URI
-             * orig_url - string - The original non-standard URL
-             * Return - void, async
-             */
+* Asynchonous function to run the user's protocol handler or passthrough to browser.
+* Method cancels the current event.
+*
+* scheme - string - A scheme for a non-standard URI
+* orig_url - string - The original non-standard URL
+* Return - void, async
+*/
             run_protocol_handler: function (scheme, orig_url, fallback) {
                 var iframe = utils.iframe,
                 chan = config.chan;
@@ -76,9 +76,11 @@ define(
                             }
                         },
                         'error': function(code, msg) {
-			    alert(code +"\n"+msg);
+alert(code +"\n"+msg);
                         }
                     }); //chan.call
             } /* run_protocol_handler */
         };
     });
+
+

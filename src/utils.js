@@ -1,4 +1,4 @@
-define('utils', ['config'], 
+define('utils', ['config'],
        function (config) {
            var doc = document,
              iframe = doc.createElement("iframe");
@@ -12,3 +12,5 @@ define('utils', ['config'],
                iframe: iframe,
            };
        });
+
+
