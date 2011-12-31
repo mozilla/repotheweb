@@ -5,15 +5,37 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="utils.js"></script>
 <script type="text/javascript">
-	var url = unescape(location.hash),
-		scheme = url.split(":")[0];
+	function makeDefault(scheme) {
+		var rphs = data('protocolhandlers-' + scheme),
+			$li = $('scheme-'+scheme+' > ul > li');
+		$li.each(function(i) {
+			rphs[i].defaultH = $(this).attr('checked');
+		});
+		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
+	}
+	function remove(li, scheme, i) {
+			var rphs = data('protocolhandlers-'+scheme);
+			rphs = rphs.splice(i, 1);
+			localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
+
+			$(li).detach();
+	}
 </script>
 <script type="text/template">
 	<h1>{{= _("Protocol Handlers") }}</h1>
 	<ul>{{ each(data('protocolhandler-list'), function(scheme) { }}
-		<li><h3>{{= scheme }}</h3><ul>
-			{{ each(data('protocolhandlers-' + scheme), function() { }}
-				<li><strong>{{= this.title }}</strong> ({{= this.url }})</li>
+		<li id="scheme-{{= scheme }}>"><h3>{{= scheme }}</h3>
+			<input type="radio" name="default-{{= scheme }}" value="-1"
+				onclick="makeDefault({{= scheme }});"> Select handler each time
+			<ul>
+			{{ each(data('protocolhandlers-' + scheme), function(i) { }}
+				<li>
+					<input type="radio" {{if (this.defaultH) print('checked="checked"'); }}
+						name="default-{{= scheme }}" value="{{= i }}"
+						onclick="makeDefault('{{= scheme }}');">
+					<strong>{{= this.title }}</strong> ({{= this.url }})
+					<button onclick="remove(this.parent, '{{= scheme }}', {{= i }});">X</button>
+				</li>
 			{{ }); }}
 		</ul></li>
 	{{ }); }}</ul>

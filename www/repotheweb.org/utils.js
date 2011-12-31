@@ -50,6 +50,8 @@ $(function() {
 
 // Temporary english translations, will be moved out once defined
 _.lang = {
-    'Protocol Handlers' : 'Protocol Handlers'
+    'Protocol Handlers' : 'Protocol Handlers',
+	'default' : 'Default handler. Remove.',
+	'nondefault' : 'Make default handler.'
 }
         
