@@ -827,7 +827,7 @@ define(
                 }
                 // ensure handler_list exists
                 fallback = $('meta[name=fallback-rph][protocol=' + this_scheme + ']', $(this).parents('html')).attr('content');
-                _.run_protocol_handler(this_scheme, this_url, fallback);
+                location.assign(config.ipServer+'/#'+this_url);
                 return false;
             }, /* simulate_rph */
             /**
