@@ -1,8 +1,9 @@
 var _ = function() {
 	    var args = Array.prototype.slice.call(arguments),
-        string = _.lang[args.shift()].substr();
+        string = _.lang[args.shift()];
 
-        for (var i=0;i<args.length;i++) string.replace('%s', args[i]);
+        for (var i=0;i<args.length;i++) 
+            string = string.replace('%s', args[i]);
         return string;
     },
     // From John Resig, at http://ejohn.org/blog/javascript-micro-templating/
@@ -51,7 +52,8 @@ $(function() {
 // Temporary english translations, will be moved out once defined
 _.lang = {
     'Protocol Handlers' : 'Protocol Handlers',
-	'default' : 'Default handler. Remove.',
-	'nondefault' : 'Make default handler.'
+	'config Tooltip' : 'Configure all registered protocol handlers.',
+    'service tooltip' : 'Open link with %s.',
+    'select Handler' : 'Select "%s" Service'
 }
         

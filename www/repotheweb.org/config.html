@@ -1,5 +1,13 @@
 <html>
 <head><title>RePo Config</title>
+<style type="text/css">
+li {list-style: none;}
+ul {padding-left:0;margin-top:100px;}
+ul ul {margin-top: 0;}
+header {background: #dddddd; width:100%;
+	position:absolute; top:0; left:0;
+	height:100px;}
+</style>
 </head>
 <body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
@@ -9,31 +17,32 @@
 		var rphs = data('protocolhandlers-' + scheme),
 			$li = $('#scheme-'+scheme+' > ul > li > :radio');
 		$li.each(function(i) {
-			var checked = $(this).is(':checked');
-			rphs[i].defaultH = checked;
+			rphs[i].defaultH = $(this).is(':checked');;
 		});
 		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
 	}
 	function remove(li, scheme, i) {
-			var key = 'protocolhandlers-'+scheme,
-				rphs = data(key);
-			rphs.splice(i, 1);
-			localStorage.setItem(key, JSON.stringify(rphs));
+		var key = 'protocolhandlers-'+scheme,
+		rphs = data(key);
+		rphs.splice(i, 1);
+		localStorage.setItem(key, JSON.stringify(rphs));
 
-			// Remove list if empty
-			if (!rphs.length) {
-				localStorage.removeItem(key);
-				// Remove from list
-				var schemes = data('protocolhandlers-list');
-				schemes.splice(schemes.indexOf(scheme), 1);
-				localStorage.setItem('protocolhandlers-list', JSON.stringify(schemes));
-			}
+		// Remove list if empty
+		if (!rphs.length) {
+			localStorage.removeItem(key);
+			// Remove from list
+			var schemes = data('protocolhandler-list');
+			delete schemes[scheme];
+			localStorage.setItem('protocolhandler-list', JSON.stringify(schemes));
+			// Remove scheme li
+			$(li).parent().parent('li').remove();
+		}
 
-			$(li).remove();
+		$(li).remove();
 	}
 </script>
 <script type="text/template">
-	<h1>{{= _("Protocol Handlers") }}</h1>
+	<header><h1>{{= _("Protocol Handlers") }}</h1></header>
 	<ul>{{ each(data('protocolhandler-list'), function(scheme) { }}
 		<li id="scheme-{{= scheme }}"><h3>{{= scheme }}</h3>
 			<input type="radio" name="default-{{= scheme }}" value="-1"
@@ -45,7 +54,7 @@
 						name="default-{{= scheme }}" value="{{= i }}"
 						onclick="makeDefault('{{= scheme }}');">
 					<strong>{{= this.title }}</strong> ({{= this.url }})
-					<button onclick="remove(this.parent, '{{= scheme }}', {{= i }});">X</button>
+					<button onclick="remove(this.parentNode, '{{= scheme }}', {{= i }});">X</button>
 				</li>
 			{{ }); }}
 		</ul></li>

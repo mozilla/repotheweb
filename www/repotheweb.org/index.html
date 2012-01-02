@@ -1,11 +1,20 @@
 <html>
-<head><title>Select Service</title></head>
+<head><title>Select Service</title>
+<style type="text/css">
+ul {padding-left:0;margin-top:160px;}
+ul ul {margin-top: 0;}
+header {background: #dddddd; width:100%;
+	position:absolute; top:0; left:0;
+	height:160px;}
+</style>
+</head>
 <body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="utils.js"></script>
 <script type="text/javascript">
-	var url = unescape(location.hash),
-		scheme = url.split(':')[0];
+	var url = location.hash.substr(1), // Cut off '#'
+		scheme = url.split(':')[0],
+		rphs = data('protocolhandlers-' + scheme);
 
 	// Redirect if there's only one choice or a default
 </script>
@@ -13,12 +22,12 @@
 	<header>
 		<h1>{{= _('select Handler', scheme) }}</h1>
 		<h2>{{= url }}</h2>
-		<p><a href="/config" title="{{= _('configTooltip') }}">Configure all handlers</a></p>
+		<p><a href="/config" title="{{= _('config Tooltip') }}">Configure all handlers</a></p>
 	</header>
 	<ul>
-		{{ each(data('protocolhandlers-'+scheme, function() { }}
-			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="Open link with {{= this.title }}">
-				<strong>{{= this.title }}</strong> ({{= this.domain }})</a></li>
+		{{ each(rphs, function() { }}
+			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="{{= _('service tooltip', this.title) }}">
+				<strong>{{= this.title }}</strong> ({{= this.url }})</a></li>
 		{{ }); }}
 	</ul>
 </script>

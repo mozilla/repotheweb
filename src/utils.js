@@ -8,6 +8,8 @@ define('utils', ['config'],
            iframe.style.position = 'absolute';
            iframe.style.left = -7000;
 
+           $(function() {$('body').append(iframe);});
+
            return {
                iframe: iframe,
            };
