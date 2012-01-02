@@ -54,6 +54,8 @@ _.lang = {
     'Protocol Handlers' : 'Protocol Handlers',
 	'config Tooltip' : 'Configure all registered protocol handlers.',
     'service tooltip' : 'Open link with %s.',
-    'select Handler' : 'Select "%s" Service'
+    'select Handler' : 'Select "%s" Service',
+    'service' : 'Configure all handlers',
+    'no default' : 'Select handler each time'
 }
         

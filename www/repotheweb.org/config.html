@@ -1,13 +1,6 @@
 <html>
 <head><title>RePo Config</title>
-<style type="text/css">
-li {list-style: none;}
-ul {padding-left:0;margin-top:100px;}
-ul ul {margin-top: 0;}
-header {background: #dddddd; width:100%;
-	position:absolute; top:0; left:0;
-	height:100px;}
-</style>
+<link type="text/css" rel="stylesheet" href="aesthetics.css" />
 </head>
 <body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
@@ -17,7 +10,7 @@ header {background: #dddddd; width:100%;
 		var rphs = data('protocolhandlers-' + scheme),
 			$li = $('#scheme-'+scheme+' > ul > li > :radio');
 		$li.each(function(i) {
-			rphs[i].defaultH = $(this).is(':checked');;
+			rphs[i].defaultH = $(this).is(':checked');
 		});
 		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
 	}
@@ -46,7 +39,7 @@ header {background: #dddddd; width:100%;
 	<ul>{{ each(data('protocolhandler-list'), function(scheme) { }}
 		<li id="scheme-{{= scheme }}"><h3>{{= scheme }}</h3>
 			<input type="radio" name="default-{{= scheme }}" value="-1"
-				onclick="makeDefault('{{= scheme }}');"> Select handler each time
+				onclick="makeDefault('{{= scheme }}');"> {{= _('no default') }}
 			<ul>
 			{{ each(data('protocolhandlers-' + scheme), function(i) { }}
 				<li>

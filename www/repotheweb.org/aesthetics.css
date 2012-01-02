@@ -1,0 +1,6 @@
+li {list-style: none;}
+ul, ol {padding-left:0;}
+
+header {background: #dddddd; width: 100%;
+	padding: 10px;}
+body {margin:0;}

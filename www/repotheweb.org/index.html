@@ -1,12 +1,6 @@
 <html>
 <head><title>Select Service</title>
-<style type="text/css">
-ul {padding-left:0;margin-top:160px;}
-ul ul {margin-top: 0;}
-header {background: #dddddd; width:100%;
-	position:absolute; top:0; left:0;
-	height:160px;}
-</style>
+<link type="text/css" rel="stylesheet" href="aesthetics.css" />
 </head>
 <body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
@@ -22,7 +16,7 @@ header {background: #dddddd; width:100%;
 	<header>
 		<h1>{{= _('select Handler', scheme) }}</h1>
 		<h2>{{= url }}</h2>
-		<p><a href="/config" title="{{= _('config Tooltip') }}">Configure all handlers</a></p>
+		<p><a href="/config" title="{{= _('config Tooltip') }}">{{= _('service') }}</a></p>
 	</header>
 	<ul>
 		{{ each(rphs, function() { }}
