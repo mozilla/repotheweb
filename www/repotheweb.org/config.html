@@ -1,41 +1,58 @@
 <html>
 <head><title>RePo Config</title>
+<link type="text/css" rel="stylesheet" href="aesthetics.css" />
 </head>
 <body>
-<ul id="protocols">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript">
+	function makeDefault(scheme) {
+		var rphs = data('protocolhandlers-' + scheme),
+			$li = $('#scheme-'+scheme+' > ul > li > :radio');
+		$li.each(function(i) {
+			rphs[i].defaultH = $(this).is(':checked');
+		});
+		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
+	}
+	function remove(li, scheme, i) {if (confirm(_('confirm delete', scheme))) {
+		var key = 'protocolhandlers-'+scheme,
+		rphs = data(key);
+		rphs.splice(i, 1);
+		localStorage.setItem(key, JSON.stringify(rphs));
 
-</ul>
-<button id="delete-all">Delete All Handlers</button>
-<script src="jquery-1.6.1.min.js"></script>
-<script>
-    var raw_ph_list = localStorage.getItem('protocolhandler-list'),
-    ph_list = JSON.parse(raw_ph_list);
+		// Remove list if empty
+		if (!rphs.length) {
+			localStorage.removeItem(key);
+			// Remove from list
+			var schemes = data('protocolhandler-list');
+			delete schemes[scheme];
+			localStorage.setItem('protocolhandler-list', JSON.stringify(schemes));
+			// Remove scheme li
+			$(li).parent().parent('li').remove();
+		}
 
-    for (var scheme in ph_list) {
-        var rphs = JSON.parse(localStorage.getItem('protocolhandlers-' + scheme)),
-            content;
-            content = "<li><h3>" + scheme + "</h3><ul>";
-
-        for (var j=0; j < rphs.length; j++) {
-            var rph = rphs[j];
-;
-            content += "<li><strong>" + 
-                          rph.title + "</strong> (" + 
-                          rph.url + ")</li>";
-        }
-        $('#protocols').append(content + "</ul></li>");
-    }
-$(document).ready(function () {
-    $('#delete-all').click(function () {
-        var raw_ph_list = localStorage.getItem('protocolhandler-list'),
-        ph_list = JSON.parse(raw_ph_list);
-        for (var scheme in ph_list) {
-            localStorage.removeItem('protocolhandlers-' + scheme);
-        }
-        localStorage.removeItem('protocolhandler-list');
-        $('#protocols li').remove();
-    });
-});
+		$(li).remove();
+		}
+	}
+</script>
+<script type="text/template">
+	<header><h1>{{= _("Protocol Handlers") }}</h1></header>
+	<ul>{{ each(data('protocolhandler-list'), function(scheme) { }}
+		<li id="scheme-{{= scheme }}"><h3>{{= scheme }}</h3>
+			<input type="radio" name="default-{{= scheme }}" value="-1"
+				onclick="makeDefault('{{= scheme }}');"> {{= _('no default') }}
+			<ul>
+			{{ each(data('protocolhandlers-' + scheme), function(i) { }}
+				<li>
+					<input type="radio" {{if (this.defaultH) { }}checked="checked"{{ } }}
+						name="default-{{= scheme }}" value="{{= i }}"
+						onclick="makeDefault('{{= scheme }}');">
+					<strong>{{= this.title }}</strong> ({{= this.url }})
+					<button onclick="remove(this.parentNode, '{{= scheme }}', {{= i }});">X</button>
+				</li>
+			{{ }); }}
+		</ul></li>
+	{{ }); }}</ul>
 </script>
 </body>
 </html>
