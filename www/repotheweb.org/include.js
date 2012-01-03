@@ -817,11 +817,9 @@ define(
                 var this_url = $(this).attr('href'),
                     this_scheme = this_url.split(':')[0],
                     official_schemes = [
-                    'http', 'https', 'mailto', 'ftp', 'gopher'
+                    'http', 'https', 'ftp', 'gopher'
                     ], //gopher, I kid, I kid
-                    prtcl_hndlr,
-                    _ = require('simulator'),
-                    fallback;
+                    prtcl_hndlr, fallback;
                 if (this_url.indexOf(official_schemes) != -1) {
                     return false;
                 }
@@ -830,54 +828,6 @@ define(
                 location.assign(config.ipServer+'/#'+this_url);
                 return false;
             }, /* simulate_rph */
-            /**
-* Asynchonous function to run the user's protocol handler or passthrough to browser.
-* Method cancels the current event.
-*
-* scheme - string - A scheme for a non-standard URI
-* orig_url - string - The original non-standard URL
-* Return - void, async
-*/
-            run_protocol_handler: function (scheme, orig_url, fallback) {
-                var iframe = utils.iframe,
-                chan = config.chan;
-                // clean up a previous channel that never was reaped
-                if (chan) chan.destroy();
-                chan = jschannels.Channel.build({'window': iframe.contentWindow, 'origin': '*', 'scope': "mozid"});
-
-                function cleanup() {
-                    chan.destroy();
-                    config.chan = undefined;
-                };
-
-                // TODO caller semantics... async or sync. Leak handlers into 3rd party sites to pre-load?
-                chan.call(
-                    {
-                        'method': "protocolHandler",
-                        'params': {'scheme': scheme, 'url': orig_url},
-                        'success': function (new_url) {
-                            //TODO rph_iframe.js DRY
-                            var rewrite_url = function (handler_url, url) {
-                                    var parts = handler_url.split('%s');
-                                    return parts[0] + url + parts[1];
-                                },
-                                fallback_url = rewrite_url(fallback, orig_url);
-                            cleanup();
-                            if (new_url === false) {
-                                if (fallback) {
-                                    window.location = fallback_url;
-                                } else {
-                                    window.location = orig_url;
-                                }
-                            } else {
-                                window.location = new_url;
-                            }
-                        },
-                        'error': function(code, msg) {
-alert(code +"\n"+msg);
-                        }
-                    }); //chan.call
-            } /* run_protocol_handler */
         };
     });
 
@@ -916,20 +866,18 @@ require(
                     return;
                 }
                 domain = domain_parts[2];
-                // Simulate hanger notification
-                if (confirm("Add " + title + "(" + domain + ") as an application for " +
-                            scheme + " links?")) {
-                    chan.call({
-                                  method: "registerProtocolHandler",
-                                  params: {'scheme': scheme, 'url': url, 'title':title, 'default':true},
-                                  success: function (rv) {
-                                      cleanup();
-                                  },
-                                  error: function(code, msg) {
 
-                                  }
-                              });//chan.call
-                }// if confirm
+                chan.call({
+                              method: "registerProtocolHandler",
+                              params: {'scheme': scheme, 'url': url, 'title':title, 'default':true},
+                              success: function (rv) {
+                                  cleanup();
+                              },
+                              error: function(code, msg) {
+
+                              }
+                          });//chan.call
+
                 navigator._registerProtocolHandlerIsShimmed = true;
 
             }

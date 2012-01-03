@@ -61,10 +61,11 @@
                 localStorage.setItem('protocolhandler-list', JSON.stringify(ph_list));
             }
         }
-    }, /* store_rph */
+    }; /* store_rph */
 
     chan.bind("registerProtocolHandler", function(trans, rph) {
-        store_rph(rph);
+	    if (confirm(_('confirm register', rph.title, rph.url.split('/')[2], rph.scheme)))
+        	store_rph(rph);
         //trans.complete('okay');
     });
 })();

@@ -31,20 +31,18 @@ require(
                     return;
                 }
                 domain = domain_parts[2];
-                // Simulate hanger notification
-                if (confirm("Add " + title + "(" + domain + ") as an application for " +
-                            scheme + " links?")) {
-                    chan.call({
-                                  method: "registerProtocolHandler",
-                                  params: {'scheme': scheme, 'url': url, 'title':title, 'default':true},
-                                  success: function (rv) {
-                                      cleanup();
-                                  },
-                                  error: function(code, msg) {
 
-                                  }
-                              });//chan.call
-                }// if confirm
+                chan.call({
+                              method: "registerProtocolHandler",
+                              params: {'scheme': scheme, 'url': url, 'title':title, 'default':true},
+                              success: function (rv) {
+                                  cleanup();
+                              },
+                              error: function(code, msg) {
+
+                              }
+                          });//chan.call
+
                 navigator._registerProtocolHandlerIsShimmed = true;
 
             }

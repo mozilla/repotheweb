@@ -14,7 +14,7 @@
 		});
 		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
 	}
-	function remove(li, scheme, i) {
+	function remove(li, scheme, i) {if (confirm(_('confirm delete', scheme))) {
 		var key = 'protocolhandlers-'+scheme,
 		rphs = data(key);
 		rphs.splice(i, 1);
@@ -32,6 +32,7 @@
 		}
 
 		$(li).remove();
+		}
 	}
 </script>
 <script type="text/template">

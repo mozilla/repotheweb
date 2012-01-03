@@ -52,10 +52,12 @@ $(function() {
 // Temporary english translations, will be moved out once defined
 _.lang = {
     'Protocol Handlers' : 'Protocol Handlers',
-	'config Tooltip' : 'Configure all registered protocol handlers.',
+    'config Tooltip' : 'Configure all registered protocol handlers.',
     'service tooltip' : 'Open link with %s.',
     'select Handler' : 'Select "%s" Service',
     'service' : 'Configure all handlers',
-    'no default' : 'Select handler each time'
+    'no default' : 'Select handler each time',
+    'confirm delete' : 'Are you sure you want to unregister this %s handler?\n\nYou will need to go to it\'s site to reregister it.',
+    'confirm register' : 'Add %s (%s) as a handler for %s links?'
 }
         
