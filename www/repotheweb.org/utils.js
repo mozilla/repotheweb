@@ -60,4 +60,9 @@ _.lang = {
     'confirm delete' : 'Are you sure you want to unregister this %s handler?\n\nYou will need to go to it\'s site to reregister it.',
     'confirm register' : 'Add %s (%s) as a handler for %s links?'
 }
+/* $.ajax((localStorage.getItem('lang') || navigator.language || navigator.userLanguage || "en").split('-')[0] + '/', {
+	async : false,
+	datatype : 'json',
+	success : function(res) {_.lang = res;}
+}); */
         

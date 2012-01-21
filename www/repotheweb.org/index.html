@@ -8,9 +8,20 @@
 <script type="text/javascript">
 	var url = location.hash.substr(1), // Cut off '#'
 		scheme = url.split(':')[0],
-		rphs = data('protocolhandlers-' + scheme);
+		rphs = data('protocolhandlers-' + scheme),
+		default_rph;
 
 	// Redirect if there's only one choice or a default
+	if (rphs.length === 1) default_rph = rphs[0];
+	else each(rphs, function() {
+		if (this.defaultH) {
+			default_rph = this;
+			return true;
+		}
+	});
+	if (default_rph) {
+		location.replace(default_rph.url.replace('%s', escape(url)));
+	}
 </script>
 <script type="text/template">
 	<header>
