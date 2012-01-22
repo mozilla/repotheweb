@@ -37,7 +37,7 @@
 </script>
 <script type="text/template">
 	<header><h1>{{= _("Protocol Handlers") }}</h1></header>
-	<ul>{{ each(data('protocolhandler-list'), function(scheme) { }}
+	<ul>{{ if (data('protocolhandler-list')) each(data('protocolhandler-list'), function(scheme) { }}
 		<li id="scheme-{{= scheme }}"><h3>{{= scheme }}</h3>
 			<input type="radio" name="default-{{= scheme }}" value="-1"
 				onclick="makeDefault('{{= scheme }}');"> {{= _('no default') }}
