@@ -1,11 +1,13 @@
 <html>
 <head><title>playlist.com! (Okay a fake for a demo)</title>
+<link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body style="background: url(home.png) no-repeat;">
 <script src="jquery-1.6.1.min.js"></script>
 <script src="http://dev.repotheweb.org:8001/include.js"></script>
 <script>
 $(document).ready(function () {
+		alert(document.querySelector('link[rel~=icon]').href);
     var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
     window.navigator.xregisterProtocolHandler('music', url, 'Music');
 });
