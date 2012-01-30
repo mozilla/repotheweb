@@ -7,7 +7,6 @@
 <script src="http://dev.repotheweb.org:8001/include.js"></script>
 <script>
 $(document).ready(function () {
-		alert(document.querySelector('link[rel~=icon]').href);
     var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
     window.navigator.xregisterProtocolHandler('music', url, 'Music');
 });

@@ -32,6 +32,7 @@
 	<ul>
 		{{ if (rphs && rphs.length) each(rphs, function() { }}
 			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="{{= _('service tooltip', this.title) }}">
+				<img src="{{= this.icon}}" alt="Favicon for {{= this.url.split('/')[2] }}" />
 				<strong>{{= this.title }}</strong> ({{= this.url }})</a></li>
 		{{ }); }}
 	</ul>
