@@ -42,7 +42,7 @@
             phs = JSON.parse(raw_phs);
         }
 
-        if (! hasRPH(phs, rph)) {
+        if (! hasRPH(phs, rph)  && confirm(_('confirm register', rph.title, rph.url.split('/')[2], rph.scheme))) {
             phs.push(rph);
             localStorage.setItem(key, JSON.stringify(phs));
 
@@ -64,7 +64,6 @@
     }; /* store_rph */
 
     chan.bind("registerProtocolHandler", function(trans, rph) {
-	    if (confirm(_('confirm register', rph.title, rph.url.split('/')[2], rph.scheme)))
         	store_rph(rph);
         //trans.complete('okay');
     });

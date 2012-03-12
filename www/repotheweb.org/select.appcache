@@ -1,0 +1,10 @@
+CACHE MANIFEST
+#12-03-12:v1
+index.html
+select.ico
+config.ico
+aesthetics.css
+http://code.jquery.com/jquery-1.6.1.min.js
+utils.js
+
+# App caches are used as an easy way to dramatically lower requests for this clientside service.

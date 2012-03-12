@@ -1,5 +1,6 @@
-<html>
+<html manifest="select.appcache">
 <head><title>Select Service</title>
+<link rel="shortcut icon" href="select.ico" />
 <link type="text/css" rel="stylesheet" href="aesthetics.css" />
 </head>
 <body>
@@ -8,19 +9,32 @@
 <script type="text/javascript">
 	var url = location.hash.substr(1), // Cut off '#'
 		scheme = url.split(':')[0],
-		rphs = data('protocolhandlers-' + scheme);
+		rphs = data('protocolhandlers-' + scheme),
+		default_rph;
 
 	// Redirect if there's only one choice or a default
+	if (rphs && rphs.length === 1) default_rph = rphs[0];
+	else each(rphs, function() {
+		if (this.defaultH) {
+			default_rph = this;
+			return true;
+		}
+	});
+	if (default_rph) {
+		location.replace(default_rph.url.replace('%s', escape(url)));
+	}
 </script>
 <script type="text/template">
 	<header>
 		<h1>{{= _('select Handler', scheme) }}</h1>
 		<h2>{{= url }}</h2>
-		<p><a href="/config.html" title="{{= _('config Tooltip') }}">{{= _('service') }}</a></p>
+		<p><a href="/config.html" title="{{= _('config Tooltip') }}">
+			<img src="/config.ico" alt="{{= _('config Tooltip') }}" />{{= _('service') }}</a></p>
 	</header>
 	<ul>
-		{{ console.log('rphs', rphs); if (rphs && rphs.length) each(rphs, function() { }}
+		{{ if (rphs && rphs.length) each(rphs, function() { }}
 			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="{{= _('service tooltip', this.title) }}">
+				<img src="{{= this.icon}}" alt="Favicon for {{= this.url.split('/')[2] }} @ {{= this.icon}}" />
 				<strong>{{= this.title }}</strong> ({{= this.url }})</a></li>
 		{{ }); }}
 	</ul>
