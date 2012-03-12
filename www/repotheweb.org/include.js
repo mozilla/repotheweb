@@ -791,15 +791,15 @@ define('utils', ['config'],
 
            return {
                iframe: iframe,
-				getFavicon : function() {
-					// In any URL based element, href is the full path, which is accessed here
-					var link = document.querySelectorAll('link[rel~=icon]');
-					if (link) return link.href;
+							 getFavicon : function() {
+									// In any URL based element, href is the full path, which is accessed here
+									var link = document.querySelector('link[rel~=icon]');
+									if (link != undefined) return link.href;
 					
-					link = document.createElement('a');
-					link.href = "/favicon.ico";
-					return link.href;
-				},
+									link = document.createElement('a');
+									link.href = "/favicon.ico";
+									return link.href;
+								},
            };
        });
 
@@ -878,7 +878,7 @@ require(
 
                 chan.call({
                               method: "registerProtocolHandler",
-                              params: {scheme: scheme, url: url, title:title, icon: utils.getFavicon()},
+                              params: {scheme: scheme, url: url, title:title, icon:utils.getFavicon()},
                               success: function (rv) {
                                   cleanup();
                               },

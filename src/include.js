@@ -34,7 +34,7 @@ require(
 
                 chan.call({
                               method: "registerProtocolHandler",
-                              params: {scheme: scheme, url: url, title:title, icon: utils.getFavicon()},
+                              params: {scheme: scheme, url: url, title:title, icon:utils.getFavicon()},
                               success: function (rv) {
                                   cleanup();
                               },

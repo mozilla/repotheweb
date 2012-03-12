@@ -1,5 +1,6 @@
 <html>
 <head><title>Select Service</title>
+<link rel="shortcut icon" href="select.ico" />
 <link type="text/css" rel="stylesheet" href="aesthetics.css" />
 </head>
 <body>
@@ -12,7 +13,7 @@
 		default_rph;
 
 	// Redirect if there's only one choice or a default
-	if (rphs.length === 1) default_rph = rphs[0];
+	if (rphs && rphs.length === 1) default_rph = rphs[0];
 	else each(rphs, function() {
 		if (this.defaultH) {
 			default_rph = this;
@@ -27,12 +28,13 @@
 	<header>
 		<h1>{{= _('select Handler', scheme) }}</h1>
 		<h2>{{= url }}</h2>
-		<p><a href="/config.html" title="{{= _('config Tooltip') }}">{{= _('service') }}</a></p>
+		<p><a href="/config.html" title="{{= _('config Tooltip') }}">
+			<img src="/config.ico" alt="{{= _('config Tooltip') }}" />{{= _('service') }}</a></p>
 	</header>
 	<ul>
 		{{ if (rphs && rphs.length) each(rphs, function() { }}
 			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="{{= _('service tooltip', this.title) }}">
-				<img src="{{= this.icon}}" alt="Favicon for {{= this.url.split('/')[2] }}" />
+				<img src="{{= this.icon}}" alt="Favicon for {{= this.url.split('/')[2] }} @ {{= this.icon}}" />
 				<strong>{{= this.title }}</strong> ({{= this.url }})</a></li>
 		{{ }); }}
 	</ul>
