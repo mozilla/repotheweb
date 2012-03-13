@@ -1,6 +1,8 @@
-li {list-style: none;}
-ul, ol {padding-left:0;}
+/* I have strived to make this a non-style and instead appear as part of the browser */
+/* Note the lack of font selection (or in code language selection), instead integrating into browser preferences. */
+li {list-style: none;}  /* use icons or radio buttons as bullets instead. */
+ul, ol {padding-left:0;} /* Do not indent lists, unclarifies the lists*/
 
 header {background: #dddddd; width: 100%;
-	padding: 10px;}
+	padding: 10px;}  /*Seperate the title and config links from the page. Grey is the least brand-y color I can think of. */
 body {margin:0;}
