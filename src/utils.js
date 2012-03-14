@@ -1,5 +1,5 @@
-define('utils', ['config'],
-       function (config) {
+define('utils', ['onready.js', 'config'],
+       function ($, config) {
            var doc = document,
              iframe = doc.createElement("iframe");
            // iframe.style.display = "none";
@@ -8,7 +8,7 @@ define('utils', ['config'],
            iframe.style.position = 'absolute';
            iframe.style.left = -7000;
 
-           $(function() {$('body').append(iframe);});
+           $(function() {document.body.appendChild(iframe);});
 
            return {
                iframe: iframe,

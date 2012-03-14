@@ -5,30 +5,27 @@ define(
         return {
             /* BEGIN registerProtocolHandler simulator
 *
-* When a user clicks a link that isn't a standard
-* internet protocol, this code will:
-* 1) Look in localStorage for a registered protocol handler
-* 2) Look in the current html document for a fallback meta tag
+* When a user visits a link that isn't a standard
+* internet protocol, this code will forward to a
+* redirection page:
+* http://bewehtoper.org?fallback#fakeURL
+* Where the fallback is optional. 
 *
-* If a protocol handler is found, the href of the link is
-* re-written to the handler's url.
-*
-* If none are found, pass-through to the browser
+* Currently only works on <a> tags.
 */
-            simulate_rph: function (e) {
-                var this_url = $(this).attr('href'),
-                    this_scheme = this_url.split(':')[0],
+            simulate_rph: function (url) {
+                var scheme = url.split(':')[0],
                     official_schemes = [
                     'http', 'https', 'ftp', 'gopher'
                     ], //gopher, I kid, I kid
                     prtcl_hndlr, fallback;
-                if (this_url.indexOf(official_schemes) != -1) {
-                    return false;
+                if (url.indexOf(official_schemes) == 0) {
+                    return url;  // no change
                 }
                 // ensure handler_list exists
-                fallback = $('meta[name=fallback-rph][protocol=' + this_scheme + ']', $(this).parents('html')).attr('content');
-                location.assign(config.ipServer+'/#'+this_url);
-                return false;
+                fallback = document.querySelector('meta[name=fallback-rph][protocol=' + scheme + ']').content;
+								fallback = fallback ? '?' + escape(fallback) : ''; // Include the fallback if it exists
+                return config.ipServer + fallback + '#' + url;
             }, /* simulate_rph */
         };
     });

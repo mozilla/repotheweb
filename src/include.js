@@ -48,12 +48,17 @@ require(
             }
 
             document.onclick = function(e) {
-var target;
+								/* Correct IE, partially in vain */
+								var target;
                 if (!e) e = window.event;
                 if (e.target) target = e.target
-else target = e.srcElement;
-                if (target.nodeName.toLowerCase() != "a") return;
-                return sim.simulate_rph.call(target, e);
+								else target = e.srcElement;
+
+                if (target.nodeName.toLowerCase() != "a") return;  // Only activate on <a> tags
+
+								/* Go to the altered URL returned by the simulation */
+                open(sim.simulate_rph(target.href), target.target ? target.target : "_self");
+								return false;
             }
 
         } // end if

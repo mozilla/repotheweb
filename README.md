@@ -28,7 +28,7 @@ If you want to work localy on the demo, here is one way to do it.
     $ sudo emacs /etc/hosts
 Add the following to 127.0.0.1 entry
 
-    127.0.0.1 localhost my-machine dev.rhapsody.com dev.repotheweb.org music-blog.com
+    127.0.0.1 localhost my-machine dev.rhapsody.com dev.repotheweb.org music-blog.com dev.playlist.com
 
     $ cp src/config.js-dist src/config.js
     $ emacs bin/update.sh
@@ -55,4 +55,8 @@ Add the following to 127.0.0.1 entry
 
 * [Fake Music Blog](http://music-blog.com:8003/index.html) to use music links. Note: Fake bitcoin link to see what an unknown protocol does.
 
+* [Fake Playlist.com](http://dev.playlist.com:8004/) to see multiple choices, prompts to install automatically. 
+
 * [Repo The Web config](http://dev.repotheweb.org:8001/config.html) to see installed handlers.
+
+Translation specific instructions can be find in /www/repotheweb.org/lang/README.md.

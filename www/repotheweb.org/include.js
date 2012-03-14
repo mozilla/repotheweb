@@ -773,12 +773,63 @@ define('jschannels', {
   })()
   // TODO include browserid/static/resources/jschannels.js
 });
+/* local copy of of OnReady.js, altered slightly to work with Require.js 
+   http://tobyho.com/2010/03/21/onready-in-a-smaller-package/ */
+define('onready.js',[], function(){
+    var addLoadListener
+    var removeLoadListener
+    if (window.addEventListener){
+        addLoadListener = function(func){
+            window.addEventListener('DOMContentLoaded', func, false)
+            window.addEventListener('load', func, false)
+        }
+        removeLoadListener = function(func){
+            window.removeEventListener('DOMContentLoaded', func, false)
+            window.removeEventListener('load', func, false)
+        }
+    }else if (document.attachEvent){
+        addLoadListener = function(func){
+            document.attachEvent('onreadystatechange', func)
+            document.attachEvent('load', func)
+        }
+        removeLoadListener = function(func){
+            document.detachEvent('onreadystatechange', func)
+            document.detachEvent('load', func)
+        }
+    }
+    
+    var callbacks = null
+    var done = false
+    function __onReady(){
+        done = true
+        removeLoadListener(__onReady)
+        if (!callbacks) return
+        for (var i = 0; i < callbacks.length; i++){
+            callbacks[i]()
+        }
+        callbacks = null
+    }
+    function OnReady(func){
+        if (done){
+            func()
+            return
+        }
+        if (!callbacks){
+            callbacks = []
+            addLoadListener(__onReady)
+        }
+        callbacks.push(func)
+    }
+    return OnReady
+})
+
+;
 define('config', {
   ipServer: 'http://dev.repotheweb.org:8001',
   chan: undefined
 });
-define('utils', ['config'],
-       function (config) {
+define('utils', ['onready.js', 'config'],
+       function ($, config) {
            var doc = document,
              iframe = doc.createElement("iframe");
            // iframe.style.display = "none";
@@ -787,7 +838,7 @@ define('utils', ['config'],
            iframe.style.position = 'absolute';
            iframe.style.left = -7000;
 
-           $(function() {$('body').append(iframe);});
+           $(function() {document.body.appendChild(iframe);});
 
            return {
                iframe: iframe,
@@ -812,30 +863,27 @@ define(
         return {
             /* BEGIN registerProtocolHandler simulator
 *
-* When a user clicks a link that isn't a standard
-* internet protocol, this code will:
-* 1) Look in localStorage for a registered protocol handler
-* 2) Look in the current html document for a fallback meta tag
+* When a user visits a link that isn't a standard
+* internet protocol, this code will forward to a
+* redirection page:
+* http://bewehtoper.org?fallback#fakeURL
+* Where the fallback is optional. 
 *
-* If a protocol handler is found, the href of the link is
-* re-written to the handler's url.
-*
-* If none are found, pass-through to the browser
+* Currently only works on <a> tags.
 */
-            simulate_rph: function (e) {
-                var this_url = $(this).attr('href'),
-                    this_scheme = this_url.split(':')[0],
+            simulate_rph: function (url) {
+                var scheme = url.split(':')[0],
                     official_schemes = [
                     'http', 'https', 'ftp', 'gopher'
                     ], //gopher, I kid, I kid
                     prtcl_hndlr, fallback;
-                if (this_url.indexOf(official_schemes) != -1) {
-                    return false;
+                if (url.indexOf(official_schemes) == 0) {
+                    return url;  // no change
                 }
                 // ensure handler_list exists
-                fallback = $('meta[name=fallback-rph][protocol=' + this_scheme + ']', $(this).parents('html')).attr('content');
-                location.assign(config.ipServer+'/#'+this_url);
-                return false;
+                fallback = document.querySelector('meta[name=fallback-rph][protocol=' + scheme + ']').content;
+								fallback = fallback ? '?' + escape(fallback) : ''; // Include the fallback if it exists
+                return config.ipServer + fallback + '#' + url;
             }, /* simulate_rph */
         };
     });
@@ -892,12 +940,17 @@ require(
             }
 
             document.onclick = function(e) {
-var target;
+								/* Correct IE, partially in vain */
+								var target;
                 if (!e) e = window.event;
                 if (e.target) target = e.target
-else target = e.srcElement;
-                if (target.nodeName.toLowerCase() != "a") return;
-                return sim.simulate_rph.call(target, e);
+								else target = e.srcElement;
+
+                if (target.nodeName.toLowerCase() != "a") return;  // Only activate on <a> tags
+
+								/* Go to the altered URL returned by the simulation */
+                open(sim.simulate_rph(target.href), target.target ? target.target : "_self");
+								return false;
             }
 
         } // end if
