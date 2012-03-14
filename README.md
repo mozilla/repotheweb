@@ -43,6 +43,9 @@ Add the following to 127.0.0.1 entry
     # new terminal 3
     $ cd www/music-blog.com/
     $ python -m SimpleHTTPServer 8003
+	# new terminal 4
+    $ cd www/playlist.com/
+    $ python -m SimpleHTTPServer 8004
 
     # build
     $ cd src
