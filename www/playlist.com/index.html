@@ -5,10 +5,8 @@
 <body style="background: url(home.png) no-repeat;">
 <script src="http://dev.repotheweb.org:8001/include.js"></script>
 <script>
-$(document).ready(function () {
-    var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
-    window.navigator.xregisterProtocolHandler('music', url, 'Music');
-});
+var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
+window.navigator.xregisterProtocolHandler('music', url, 'Music');
 </script>
 </body>
 </html>

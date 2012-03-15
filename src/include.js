@@ -1,8 +1,8 @@
 /*jslint strict: false, plusplus: false */
 /*global require: true, navigator: true, window: true */
 require(
-    ['jschannels', 'simulator', 'utils', 'config'],
-    function (jschannels, sim, utils, config) {
+    ['jschannels', 'simulator', 'utils', 'config', 'onready'],
+    function (jschannels, sim, utils, config, $) {
         if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
             var simulate_rph;
             navigator.xregisterProtocolHandler = function (scheme, url, title) {
@@ -11,15 +11,6 @@ require(
                 doc = window.document,
                 iframe = utils.iframe,
                 chan = config.chan;
-
-                // clean up a previous channel that never was reaped
-                if (chan) chan.destroy();
-                chan = jschannels.Channel.build({'window': iframe.contentWindow, 'origin': '*', 'scope': "mozid"});
-
-                function cleanup() {
-                    chan.destroy();
-                    config.chan = undefined;
-                }
 
                 if (url.indexOf("%s") == -1) {
                     if (window.console) console.error("url missing %s " + url);
@@ -32,16 +23,27 @@ require(
                 }
                 domain = domain_parts[2];
 
-                chan.call({
-                              method: "registerProtocolHandler",
-                              params: {scheme: scheme, url: url, title:title, icon:utils.getFavicon()},
-                              success: function (rv) {
-                                  cleanup();
-                              },
-                              error: function(code, msg) {
+                $(function() {
+                    // clean up a previous channel that never was reaped
+                    if (chan) chan.destroy();
+                    chan = jschannels.Channel.build({'window': iframe.contentWindow, 'origin': '*', 'scope': "mozid"});
 
-                              }
-                          });//chan.call
+                    function cleanup() {
+                        chan.destroy();
+                        config.chan = undefined;
+                    }
+
+                    chan.call({
+                                  method: "registerProtocolHandler",
+                                  params: {scheme: scheme, url: url, title:title, icon:utils.getFavicon()},
+                                  success: function (rv) {
+                                      cleanup();
+                                  },
+                                  error: function(code, msg) {
+
+                                  }
+                              });//chan.call
+                });
 
                 navigator._registerProtocolHandlerIsShimmed = true;
 

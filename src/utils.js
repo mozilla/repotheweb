@@ -1,4 +1,4 @@
-define('utils', ['onready.js', 'config'],
+define('utils', ['onready', 'config'],
        function ($, config) {
            var doc = document,
              iframe = doc.createElement("iframe");

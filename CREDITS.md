@@ -18,7 +18,7 @@ Yummy Gum & Picol both distribute on findicons.com, so it should get mentioned.
 
 - [John Resig](http://ejohn.org/) -- jQuery and micro-templating (embedded in /www/repotheweb.org/utils.js)
 - [Toby Ho](http://tobyho.com/) -- OnReady.js (/src/onready.js)
-- [James Burke](http://tagneto.blogspot.co.nz/) -- Require.js (lib/r.js) and Almond.js (lib/almond.js)
+- [James Burke](http://tagneto.blogspot.co.nz/) -- Require.js (lib/r.js) and Almond (lib/almond.js)
 
 ##Hackers##
 

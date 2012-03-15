@@ -773,9 +773,13 @@ define('jschannels', {
   })()
   // TODO include browserid/static/resources/jschannels.js
 });
+define('config', {
+  ipServer: 'http://dev.repotheweb.org:8001',
+  chan: undefined
+});
 /* local copy of of OnReady.js, altered slightly to work with Require.js 
    http://tobyho.com/2010/03/21/onready-in-a-smaller-package/ */
-define('onready.js',[], function(){
+define('onready',[], function(){
     var addLoadListener
     var removeLoadListener
     if (window.addEventListener){
@@ -824,11 +828,7 @@ define('onready.js',[], function(){
 })
 
 ;
-define('config', {
-  ipServer: 'http://dev.repotheweb.org:8001',
-  chan: undefined
-});
-define('utils', ['onready.js', 'config'],
+define('utils', ['onready', 'config'],
        function ($, config) {
            var doc = document,
              iframe = doc.createElement("iframe");
@@ -893,8 +893,8 @@ define(
 /*jslint strict: false, plusplus: false */
 /*global require: true, navigator: true, window: true */
 require(
-    ['jschannels', 'simulator', 'utils', 'config'],
-    function (jschannels, sim, utils, config) {
+    ['jschannels', 'simulator', 'utils', 'config', 'onready'],
+    function (jschannels, sim, utils, config, $) {
         if (!navigator.xregisterProtocolHandler || !navigator._registerProtocolHandlerIsShimmed) {
             var simulate_rph;
             navigator.xregisterProtocolHandler = function (scheme, url, title) {
@@ -903,15 +903,6 @@ require(
                 doc = window.document,
                 iframe = utils.iframe,
                 chan = config.chan;
-
-                // clean up a previous channel that never was reaped
-                if (chan) chan.destroy();
-                chan = jschannels.Channel.build({'window': iframe.contentWindow, 'origin': '*', 'scope': "mozid"});
-
-                function cleanup() {
-                    chan.destroy();
-                    config.chan = undefined;
-                }
 
                 if (url.indexOf("%s") == -1) {
                     if (window.console) console.error("url missing %s " + url);
@@ -924,16 +915,27 @@ require(
                 }
                 domain = domain_parts[2];
 
-                chan.call({
-                              method: "registerProtocolHandler",
-                              params: {scheme: scheme, url: url, title:title, icon:utils.getFavicon()},
-                              success: function (rv) {
-                                  cleanup();
-                              },
-                              error: function(code, msg) {
+                $(function() {
+                    // clean up a previous channel that never was reaped
+                    if (chan) chan.destroy();
+                    chan = jschannels.Channel.build({'window': iframe.contentWindow, 'origin': '*', 'scope': "mozid"});
 
-                              }
-                          });//chan.call
+                    function cleanup() {
+                        chan.destroy();
+                        config.chan = undefined;
+                    }
+
+                    chan.call({
+                                  method: "registerProtocolHandler",
+                                  params: {scheme: scheme, url: url, title:title, icon:utils.getFavicon()},
+                                  success: function (rv) {
+                                      cleanup();
+                                  },
+                                  error: function(code, msg) {
+
+                                  }
+                              });//chan.call
+                });
 
                 navigator._registerProtocolHandlerIsShimmed = true;
 
