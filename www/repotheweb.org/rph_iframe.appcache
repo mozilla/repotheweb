@@ -5,3 +5,5 @@ jschannel.js
 http://code.jquery.com/jquery-1.6.1.min.js
 utils.js
 rph_iframe.js
+
+lang/
