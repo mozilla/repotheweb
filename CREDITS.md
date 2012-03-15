@@ -12,7 +12,9 @@ They're listed here in case their sites go down before us, which we hope wouldn'
 
 	Got it off his homepage, obviously an image search.
 
-Yummy Gum & Picol both distribute on findicons.com, so it should get mentioned. 
+- [GentleFace.com](http://gentleface.com/) (no About Us) -- bookmark favicon (/www/repotheweb.org/bookmark.ico)
+
+Yummy Gum, Picol, and GentleFace.com all distribute on findicons.com, so it deserves to get mentioned. 
 
 ##Libraries##
 

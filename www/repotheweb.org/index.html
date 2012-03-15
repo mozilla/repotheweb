@@ -49,7 +49,7 @@
 				{{= _('default') }}</a>)</li>
 		{{ if (fallback.length) { }}
 			<li><a href="{{= fallback.replace('%s', escape(url)) }}" title="{{= _('fallback title') }}">
-				<img src="{{= fallback.split('/').slice(0,4).join('/') }}/favicon.ico" alt="{{= _('fallback alt', fallback.split('/')[2]) }}" />
+				<img src="{{= fallback.split('/').slice(0,3).join('/') }}/favicon.ico" alt="{{= _('fallback alt', fallback.split('/')[2]) }}" />
 				<strong>{{= _('fallback') }}</strong> ({{= fallback }})</a></li>
 		{{ } }}
 	</ul>

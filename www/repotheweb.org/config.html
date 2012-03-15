@@ -39,23 +39,31 @@
 	}
 </script>
 <script type="text/template">
-	<header><h1>{{= _("Protocol Handlers") }}</h1></header>
+	<header>
+		<h1>{{= _("Protocol Handlers") }}</h1>
+		<p><a href="/#bookmark:{{= location.href }}" title="{{= _('bookmark title') }}">
+			<img src="bookmark.ico" alt="{{= _('bookmark alt') }}"> {{= _('bookmark') }}</a></p>
+	</header>
 	<ul>{{ if (data('protocolhandler-list')) each(data('protocolhandler-list'), function(scheme) { }}
 		<li id="scheme-{{= scheme }}"><h3>{{= scheme }}</h3>
 			<input type="radio" name="default-{{= scheme }}" value="-1"
-				onclick="makeDefault('{{= scheme }}');"> {{= _('no default') }}
+				onclick="makeDefault('{{= scheme }}');"
+				title="{{= _('no default tooltip') }}"> {{= _('no default') }}
 			<input type="radio" name="default-{{= scheme }}" value="-2"
 				onclick="makeDefault('{{= scheme }}');" class="native"
-				{{ if (data('native-'+scheme)) { }}checked="checked"{{ } }}> 
+				{{ if (data('native-'+scheme)) { }}checked="checked"{{ } }}
+				title="{{= _('native default title') }}"> 
 				{{= _('native tooltip') }}
 			<ul>
 			{{ each(data('protocolhandlers-' + scheme), function(i) { }}
 				<li>
 					<input type="radio" {{if (this.defaultH) { }}checked="checked"{{ } }}
 						name="default-{{= scheme }}" value="{{= i }}"
-						onclick="makeDefault('{{= scheme }}');">
+						onclick="makeDefault('{{= scheme }}');"
+						title="{{= _('default tooltip', this.url.split('/')[2], scheme) }}">
 					<strong>{{= this.title }}</strong> ({{= this.url }})
-					<button onclick="remove(this.parentNode, '{{= scheme }}', {{= i }});">X</button>
+					<button onclick="remove(this.parentNode, '{{= scheme }}', {{= i }});"
+						title="{{= _('default remove', this.url, scheme) }}">X</button>
 				</li>
 			{{ }); }}
 		</ul></li>
