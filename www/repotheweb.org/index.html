@@ -9,17 +9,20 @@
 <script type="text/javascript">
 	var url = location.hash.substr(1), // Cut off '#'
 		scheme = url.split(':')[0],
+		fallback = unescape(location.search.substr(1)), // Cut off '?'
 		rphs = data('protocolhandlers-' + scheme),
 		default_rph;
 
 	// Redirect if there's only one choice or a default
-	if (rphs && rphs.length === 1) default_rph = rphs[0];
+	if (data('native-'+scheme)) location.replace(url);
+	else if (rphs && rphs.length === 1) default_rph = rphs[0];
 	else each(rphs, function() {
 		if (this.defaultH) {
 			default_rph = this;
 			return true;
 		}
 	});
+
 	if (default_rph) {
 		location.replace(default_rph.url.replace('%s', escape(url)));
 	}
@@ -34,9 +37,21 @@
 	<ul>
 		{{ if (rphs && rphs.length) each(rphs, function() { }}
 			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="{{= _('service tooltip', this.title) }}">
-				<img src="{{= this.icon}}" alt="Favicon for {{= this.url.split('/')[2] }} @ {{= this.icon}}" />
+				<img src="{{= this.icon}}" alt="{{= _('favicon alt', this.url.split('/')[2]) }}" />
 				<strong>{{= this.title }}</strong> ({{= this.url }})</a></li>
 		{{ }); }}
+	</ul>
+	<hr />
+	<ul>
+		<li><a href="{{= url }}" title="{{= _('native tooltip') }}">
+			<img src="/offline.ico" alt="{{= _('native alt') }}" /><strong>{{= _('native') }}</strong></a>
+			(<a href="{{= url }}" title="{{= _('native default alt') }}" onclick="data('native-{{= scheme }}', true);">
+				{{= _('default') }}</a>)</li>
+		{{ if (fallback.length) { }}
+			<li><a href="{{= fallback.replace('%s', escape(url)) }}" title="{{= _('fallback title') }}">
+				<img src="{{= fallback.split('/').slice(0,4).join('/') }}/favicon.ico" alt="{{= _('fallback alt', fallback.split('/')[2]) }}" />
+				<strong>{{= _('fallback') }}</strong> ({{= fallback }})</a></li>
+		{{ } }}
 	</ul>
 </script>
 </body>

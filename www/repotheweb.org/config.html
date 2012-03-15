@@ -13,6 +13,8 @@
 		$li.each(function(i) {
 			rphs[i].defaultH = $(this).is(':checked');
 		});
+		if ($('#scheme-' + scheme + ' .native').is(':checked')) data('native-'+scheme, true);
+		else localStorage.removeItem('native-'+scheme);
 		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
 	}
 	function remove(li, scheme, i) {if (confirm(_('confirm delete', scheme))) {
@@ -42,6 +44,10 @@
 		<li id="scheme-{{= scheme }}"><h3>{{= scheme }}</h3>
 			<input type="radio" name="default-{{= scheme }}" value="-1"
 				onclick="makeDefault('{{= scheme }}');"> {{= _('no default') }}
+			<input type="radio" name="default-{{= scheme }}" value="-2"
+				onclick="makeDefault('{{= scheme }}');" class="native"
+				{{ if (data('native-'+scheme)) { }}checked="checked"{{ } }}> 
+				{{= _('native tooltip') }}
 			<ul>
 			{{ each(data('protocolhandlers-' + scheme), function(i) { }}
 				<li>

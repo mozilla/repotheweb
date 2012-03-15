@@ -37,8 +37,9 @@ var _ = function() {
         // Provide some basic currying to the user
         return data ? fn( data ) : fn;
       },
-    data = function(key) {
-        return JSON.parse(localStorage.getItem(key));
+    data = function(key, value) {
+				if (value != undefined) localStorage.setItem(key, JSON.stringify(value));
+        else return JSON.parse(localStorage.getItem(key));
     },
     each = $.each;
 
