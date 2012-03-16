@@ -1,0 +1,11 @@
+CACHE MANIFEST
+#16-03-12:v0.1
+index.html
+/icon/config.ico # from http://www.iconfinder.com/icondetails/62982/40/5_gear_preferences_icon
+/aesthetics.css
+http://code.jquery.com/jquery-1.6.1.min.js
+/utils.js
+
+/lang/
+/icon/nofavicon.ico
+/icon/bookmark.ico

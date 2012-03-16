@@ -8,10 +8,7 @@ They're listed here in case their sites go down before us, which we hope wouldn'
 
 - [Yummy Gum](http://yummygum.com/) (Leon Ephraim & Vince Swiddler) -- config favicon (/www/repotheweb.org/config.ico).
 - [Picol](http://www.picol.org/) (Melih Bilgil & Co.) -- select service favicon (/www/repotheweb.org/select.ico).
-- [Cyber Tourniquet](http://www.cybertourniquet.com/) (he only says "Dan") -- no favicon icon (/www/repotheweb.org/nofavicon.ico)
-
-	Got it off his homepage, obviously an image search.
-
+- "austintheheller" (site's down already) -- [no favicon icon](http://www.veryicon.com/icons/system/august/) (/www/repotheweb.org/select.ico).
 - [GentleFace.com](http://gentleface.com/) (no About Us) -- bookmark favicon (/www/repotheweb.org/bookmark.ico)
 
 Yummy Gum, Picol, and GentleFace.com all distribute on findicons.com, so it deserves to get mentioned. 

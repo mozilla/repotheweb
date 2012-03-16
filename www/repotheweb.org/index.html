@@ -1,9 +1,9 @@
 <html manifest="select.appcache">
 <head><title>Select Service</title>
-<link rel="shortcut icon" href="select.ico" />
+<link rel="shortcut icon" href="icon/select.ico" />
 <link type="text/css" rel="stylesheet" href="aesthetics.css" />
 </head>
-<body>
+<body class="modal">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="utils.js"></script>
 <script type="text/javascript">
@@ -28,31 +28,35 @@
 	}
 </script>
 <script type="text/template">
+	<div class="modal">
 	<header>
 		<h1>{{= _('select Handler', scheme) }}</h1>
-		<h2>{{= url }}</h2>
-		<p><a href="/config.html" title="{{= _('config Tooltip') }}">
-			<img src="/config.ico" alt="{{= _('config Tooltip') }}" />{{= _('service') }}</a></p>
+		<h2 class="url">{{= url }}</h2>
+		<p><a href="/config/" title="{{= _('config Tooltip') }}">
+			<img src="icon/config.ico" alt="{{= _('config Tooltip') }}" />{{= _('service') }}</a></p>
 	</header>
 	<ul>
 		{{ if (rphs && rphs.length) each(rphs, function() { }}
+			{{ var domain = this.url.split('/')[2]; }}
 			<li><a href="{{= this.url.replace('%s', escape(url)) }}" title="{{= _('service tooltip', this.title) }}">
-				<img src="{{= this.icon}}" alt="{{= _('favicon alt', this.url.split('/')[2]) }}" />
-				<strong>{{= this.title }}</strong> ({{= this.url }})</a></li>
+				<img src="{{= this.icon}}" alt="{{= _('favicon alt', domain) }}" />
+				<strong>{{= this.title }}</strong> ({{= domain }})</a></li>
 		{{ }); }}
 	</ul>
 	<hr />
 	<ul>
 		<li><a href="{{= url }}" title="{{= _('native tooltip') }}">
-			<img src="/offline.ico" alt="{{= _('native alt') }}" /><strong>{{= _('native') }}</strong></a>
+			<img src="/icon/offline.ico" alt="{{= _('native alt') }}" /><strong>{{= _('native') }}</strong></a>
 			(<a href="{{= url }}" title="{{= _('native default alt') }}" onclick="data('native-{{= scheme }}', true);">
 				{{= _('default') }}</a>)</li>
 		{{ if (fallback.length) { }}
+			{{ var domain = fallback.split('/')[2]; }}
 			<li><a href="{{= fallback.replace('%s', escape(url)) }}" title="{{= _('fallback title') }}">
-				<img src="{{= fallback.split('/').slice(0,3).join('/') }}/favicon.ico" alt="{{= _('fallback alt', fallback.split('/')[2]) }}" />
-				<strong>{{= _('fallback') }}</strong> ({{= fallback }})</a></li>
+				<img src="{{= fallback.split('/').slice(0,3).join('/') }}/favicon.ico" alt="{{= _('fallback alt', domain) }}" />
+				<strong>{{= _('fallback') }}</strong> ({{= domain }})</a></li>
 		{{ } }}
 	</ul>
+	</div>
 </script>
 </body>
 </html>

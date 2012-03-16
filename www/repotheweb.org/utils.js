@@ -63,7 +63,7 @@ $(function() {
 
 		// Fix broken images after they're created but before they load
 		$('img').error(function() {
-			$(this).attr('src', '/nofavicon.ico');
+			$(this).attr('src', '/icon/nofavicon.ico');
 		});
 });
 

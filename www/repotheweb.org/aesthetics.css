@@ -1,8 +1,32 @@
 /* I have strived to make this a non-style and instead appear as part of the browser */
 /* Note the lack of font selection (or in code language selection), instead integrating into browser preferences. */
-li {list-style: none;}  /* use icons or radio buttons as bullets instead. */
+li {
+	list-style: none; /* use icons or radio buttons as bullets instead. */
+	margin: 5px; /* links stack up to closely otherwise. */
+	margin-left: 0;
+}  
 ul, ol {padding-left:0;} /* Do not indent lists, unclarifies the lists*/
 
+h2.url { /* avoids funny text-wrapping in URLs */
+	font-size: 90%;
+	text-wrap: unrestricted;
+}
+
 header {background: #dddddd; width: 100%;
-	padding: 10px;}  /*Seperate the title and config links from the page. Grey is the least brand-y color I can think of. */
+	padding: 10px;}  
 body {margin:0;}
+
+/* Modal styles, designed to communicate that the page is intermediary (as on index.html).
+   The idea is to acheive a (exaggerated) lightbox look while not tying to either the next page or previous one. */
+body.modal {background: #fefcd6;} /* Create a surface to "float" upon. Faded yellow is both subtle and highlights the page. */
+body.modal .modal {
+	/* Position in the center of the viewport. */
+	width: 800px; height: 80%;
+	margin: 40px auto;
+	background: white;
+
+	/* Appear to float high above the page. */
+	box-shadow: 50px 50px 50px #512e60;
+	border-radius: 10px;
+}
+.modal header {border-top-left-radius: 10px; border-top-right-radius: 10px; padding:0;} 

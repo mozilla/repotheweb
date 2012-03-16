@@ -1,14 +1,15 @@
 CACHE MANIFEST
-#12-03-12:v1
+#16-03-12:v0.1
 index.html
-select.ico # from http://findicons.com/icon/265182/questionmark_32
-config.ico # from http://www.iconfinder.com/icondetails/62982/40/5_gear_preferences_icon
+icon/select.ico # from http://findicons.com/icon/265182/questionmark_32
+icon/config.ico # from http://www.iconfinder.com/icondetails/62982/40/5_gear_preferences_icon
+icon/offline.ico
 aesthetics.css
 http://code.jquery.com/jquery-1.6.1.min.js
 utils.js
 
 # Loaded by utils.js
-nofavicon.ico # from http://www.cybertourniquet.com/
+icon/nofavicon.ico # from http://www.veryicon.com/icons/system/august/
 lang/ # I don't know if this works, but worth the try
 
 # App caches are used as an easy way to dramatically lower requests for this clientside service.
