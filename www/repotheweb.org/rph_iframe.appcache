@@ -1,9 +1,7 @@
 CACHE MANIFEST
-#16-03-12:v0.1
+#17-03-12:v0.2
 rph_iframe.html
 jschannel.js
 http://code.jquery.com/jquery-1.6.1.min.js
 utils.js
 rph_iframe.js
-
-lang/

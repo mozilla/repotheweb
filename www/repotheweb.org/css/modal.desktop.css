@@ -1,0 +1,18 @@
+/* The idea is to acheive a (exaggerated) lightbox look while not tying to either the next page or previous one. */
+#modal {
+    /* Position in the center of the viewport. */
+    width: 800px; height: 80%;
+    margin: 40px auto;
+    background: white;
+
+    /* Appear to float high above the page. */
+    box-shadow: 50px 50px 50px #512e60;
+    border-radius: 10px;
+
+		/* In case of older browsers */
+		-webkit-box-shadow: 50px 50px 50px #512e60;
+    -moz-border-radius: 10px;
+		-moz-box-shadow: 50px 50px 50px #512e60;
+    -moz-border-radius: 10px;
+}
+header {border-top-left-radius: 10px; border-top-right-radius: 10px;} 

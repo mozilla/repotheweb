@@ -1,0 +1,33 @@
+body {
+    text-size: large;
+    padding: 0; margin: 0; /* make cozy */
+}
+
+/* Modal animation, inspired by jQuery Mobile's code. */
+@keyframes slideup {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+@-webkit-keyframes slideup {
+    from { -webkit-transform: translateY(100%); }
+    to { -webkit-transform: translateY(0); }
+}
+@-moz-keyframes slideup {
+    from { -moz-transform: translateY(100%); }
+    to { -moz-transform: translateY(0); }
+}
+
+#modal {
+    transform: translateY(0);
+    animation-name: slideup;
+    animation-duration: 250ms;
+    -webkit-transform: translateY(0);
+    -webkit-animation-name: slideup;
+    -webkit-animation-duration: 250ms;
+    -moz-transform: translateY(0);
+    -moz-animation-name: slideup;
+    -moz-animation-duration: 250ms;
+    
+    /* Make sure it covers the whole screen. */
+    height: 100%;
+}

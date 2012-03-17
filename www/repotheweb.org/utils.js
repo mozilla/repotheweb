@@ -78,5 +78,12 @@ $(function() {
 		$('img').error(function() {
 			$(this).attr('src', '/icon/nofavicon.ico');
 		});
+
+		// Stay updated, otherwise there's no point of development
+		if ('applicationCache' in window) 
+			applicationCache.addEventListener('updateready', function(e) {
+				if (applicationCache.status == window.applicationCache.UPDATEREADY)
+					applicationCache.swapCache(); // Will be used next time, perfectly reasonable for our usage patterns.
+			});
 });
 
