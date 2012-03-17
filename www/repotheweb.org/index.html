@@ -2,8 +2,67 @@
 <head><title>Select Service</title>
 <link rel="shortcut icon" href="icon/select.ico" />
 <link type="text/css" rel="stylesheet" href="aesthetics.css" />
+
+<!-- Style to communicate modalness and disconnectedness "intermediary".
+     Uses Mobile First Responsive Web Design. Mobile doubles for iframes. -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /> <!-- Makes it feel less like a normal page -->
+<style type="text/css">
+    /* Common code for modal look, floats upon a surface. */
+    body {background: #fefcd6;} /* Faded yellow is both subtle and highlights the page. */
+    #modal {background: white;}
+    header {padding: 0;}
+</style>
+<style type="text/css" media="screen and (min-width:800px)">
+    /* The idea is to acheive a (exaggerated) lightbox look while not tying to either the next page or previous one. */
+    #modal {
+        /* Position in the center of the viewport. */
+        width: 800px; height: 80%;
+        margin: 40px auto;
+        background: white;
+
+        /* Appear to float high above the page. */
+        box-shadow: 50px 50px 50px #512e60;
+        border-radius: 10px;
+    }
+    header {border-top-left-radius: 10px; border-top-right-radius: 10px;} 
+</style>
+<style type="text/css" media="screen and (max-width:800px)">
+    body {
+        text-size: large;
+        padding: 0; margin: 0; /* make cozy */
+    }
+
+    /* Modal animation, inspired by jQuery Mobile's code. */
+    @keyframes slideup {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+    @-webkit-keyframes slideup {
+        from { -webkit-transform: translateY(100%); }
+        to { -webkit-transform: translateY(0); }
+    }
+    @-moz-keyframes slideup {
+        from { -moz-transform: translateY(100%); }
+        to { -moz-transform: translateY(0); }
+    }
+
+    #modal {
+        transform: translateY(0);
+        animation-name: slideup;
+        animation-duration: 250ms;
+        -webkit-transform: translateY(0);
+        -webkit-animation-name: slideup;
+        -webkit-animation-duration: 250ms;
+        -moz-transform: translateY(0);
+        -moz-animation-name: slideup;
+        -moz-animation-duration: 250ms;
+        
+        /* Make sure it covers the whole screen. */
+        height: 100%;
+    }
+</style>
 </head>
-<body class="modal">
+<body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 <script type="text/javascript" src="utils.js"></script>
 <script type="text/javascript">
@@ -28,7 +87,7 @@
 	}
 </script>
 <script type="text/template">
-	<div class="modal">
+	<div id="modal">
 	<header>
 		<h1>{{= _('select Handler', scheme) }}</h1>
 		<h2 class="url">{{= url }}</h2>

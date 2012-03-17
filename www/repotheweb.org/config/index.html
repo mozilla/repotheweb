@@ -15,13 +15,13 @@
 		});
 		if ($('#scheme-' + scheme + ' .native').is(':checked')) data('native-'+scheme, true);
 		else localStorage.removeItem('native-'+scheme);
-		localStorage.setItem('protocolhandlers-'+scheme, JSON.stringify(rphs));
+		data('protocolhandlers-'+scheme, rphs);
 	}
 	function remove(li, scheme, i) {if (confirm(_('confirm delete', scheme))) {
 		var key = 'protocolhandlers-'+scheme,
 		rphs = data(key);
 		rphs.splice(i, 1);
-		localStorage.setItem(key, JSON.stringify(rphs));
+		data(key, rphs);
 
 		// Remove list if empty
 		if (!rphs.length) {
@@ -29,7 +29,7 @@
 			// Remove from list
 			var schemes = data('protocolhandler-list');
 			delete schemes[scheme];
-			localStorage.setItem('protocolhandler-list', JSON.stringify(schemes));
+			data('protocolhandler-list', schemes);
 			// Remove scheme li
 			$(li).parent().parent('li').remove();
 		}

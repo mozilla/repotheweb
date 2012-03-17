@@ -1,3 +1,4 @@
+document.createElement("header"); // required for IE to render header
 var _ = function() {
 	    var args = Array.prototype.slice.call(arguments),
         string = _.lang[args.shift()] || "";
@@ -38,10 +39,22 @@ var _ = function() {
         return data ? fn( data ) : fn;
       },
     data = function(key, value) {
-				if (value != undefined) localStorage.setItem(key, JSON.stringify(value));
-        else return JSON.parse(localStorage.getItem(key));
+				if (value != undefined) {
+					localStorage.setItem(key, JSON.stringify(value));
+					data.cache[key] = value;
+				}
+        else {
+					if (key in data.cache) return data.cache[key];
+					else {
+						var rep = JSON.parse(localStorage.getItem(key));
+						data.cache[key] = rep;
+						return rep;
+					}
+				}
     },
     each = $.each;
+
+data.cache = {}; // Takes care of issues where data doesn't update dynamically.
 
 $(function() {
 		// Download language file, executes synchronously before templates are rendered.
