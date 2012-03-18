@@ -38,9 +38,9 @@
 		}
 	});
 
-	if (default_rph) {
+	if (default_rph)
 		location.replace(default_rph.url.replace('%s', escape(url)));
-	}
+	else document.body.className = "modal";
 </script>
 <script type="text/template">
 	<div id="modal">
