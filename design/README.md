@@ -12,7 +12,7 @@ However, the design is wasteful of space (because it didn't use that much anyway
 
 ##Why?##
 
-In development, we'll expose ourselves to limited demos. This does not reflect what is likely to be the case, in that users will have registered several schemes. The config screen needs to be scalable. In order to do that we need to play with varying degrees of content while designing this/these pages. 
+In development, we'll expose ourselves to limited demos. This does not reflect what is likely to be the case, in that users will have registered several, dozons of, schemes. The config screen needs to be scalable. In order to do that we need to play with varying degrees of content while designing this/these pages. 
 
 ##Plans##
 
