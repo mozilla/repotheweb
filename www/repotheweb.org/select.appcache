@@ -1,9 +1,15 @@
 CACHE MANIFEST
-#12-03-12:v1
+#17-03-12:v0.2
 index.html
-select.ico
-config.ico
-aesthetics.css
+
+icon/select.ico # from http://findicons.com/icon/265182/questionmark_32
+icon/config.ico # from http://www.iconfinder.com/icondetails/62982/40/5_gear_preferences_icon
+icon/offline.ico
+icon/nofavicon.ico # from http://www.veryicon.com/icons/system/august/
+
+css/aesthetics.css
+css/modal.css # CACHE media queries for .mini. & .desktop.?
+
 http://code.jquery.com/jquery-1.6.1.min.js
 utils.js
 

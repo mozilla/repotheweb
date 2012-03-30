@@ -3,13 +3,10 @@
 <link rel="shortcut icon" href="/favicon.ico" />
 </head>
 <body style="background: url(home.png) no-repeat;">
-<script src="jquery-1.6.1.min.js"></script>
 <script src="http://dev.repotheweb.org:8001/include.js"></script>
 <script>
-$(document).ready(function () {
-    var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
-    window.navigator.xregisterProtocolHandler('music', url, 'Music');
-});
+var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
+window.navigator.xregisterProtocolHandler('music', url, 'Add to your Playlist');
 </script>
 </body>
 </html>

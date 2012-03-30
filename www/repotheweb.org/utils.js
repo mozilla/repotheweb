@@ -1,3 +1,4 @@
+document.createElement("header"); // required for IE to render header
 var _ = function() {
 	    var args = Array.prototype.slice.call(arguments),
         string = _.lang[args.shift()] || "";
@@ -37,10 +38,23 @@ var _ = function() {
         // Provide some basic currying to the user
         return data ? fn( data ) : fn;
       },
-    data = function(key) {
-        return JSON.parse(localStorage.getItem(key));
+    data = function(key, value) {
+				if (value != undefined) {
+					localStorage.setItem(key, JSON.stringify(value));
+					data.cache[key] = value;
+				}
+        else {
+					if (key in data.cache) return data.cache[key];
+					else {
+						var rep = JSON.parse(localStorage.getItem(key));
+						data.cache[key] = rep;
+						return rep;
+					}
+				}
     },
     each = $.each;
+
+data.cache = {}; // Takes care of issues where data doesn't update dynamically.
 
 $(function() {
 		// Download language file, executes synchronously before templates are rendered.
@@ -62,7 +76,14 @@ $(function() {
 
 		// Fix broken images after they're created but before they load
 		$('img').error(function() {
-			$(this).attr('src', '/nofavicon.ico');
+			$(this).attr('src', '/icon/nofavicon.ico');
 		});
+
+		// Stay updated, otherwise there's no point of development
+		if ('applicationCache' in window) 
+			applicationCache.addEventListener('updateready', function(e) {
+				if (applicationCache.status == window.applicationCache.UPDATEREADY)
+					applicationCache.swapCache(); // Will be used next time, perfectly reasonable for our usage patterns.
+			});
 });
 

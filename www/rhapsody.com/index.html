@@ -19,7 +19,7 @@ iframe { position: absolute; left: -400px; }
 $(document).ready(function () {
     $('#install').click(function () {
         var url = 'http://' + window.location.host + '/music_protocol_handler.html?uri=%s';
-        window.navigator.xregisterProtocolHandler('music', url, 'Music');
+        window.navigator.xregisterProtocolHandler('music', url, 'Play on Rhapsody');
         $('#install-callout').remove();
     });
 });

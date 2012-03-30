@@ -1,10 +1,31 @@
 {
 "Protocol Handlers" : "Protocol Handlers",
 "config Tooltip" : "Configure all registered protocol handlers.",
-"service tooltip" : "Open link with %s.",
 "select Handler" : "Select \"%s\" Service",
+
+"service tooltip" : "Open link with %s.",
 "service" : "Configure all handlers",
-"no default" : "Select handler each time",
+"favicon alt" : "Favicon for %s",
+
 "confirm delete" : "Are you sure you want to unregister this %s handler?\n\nYou will need to go to it's site to reregister it.",
-"confirm register" : "Add %s (%s) as a handler for %s links?"
+"confirm register" : "Add %s (%s) as a handler for %s links?",
+
+"native tooltip" : "Open with your OS or browser services.",
+"native alt" : "Favicon representing non webapps (crossed out globe).",
+"native" : "Open Natively",
+"native default title" : "Always open with your OS or browser services.",
+"default" : "Default",
+
+"fallback tooltip" : "Open URL with source site's suggestion.",
+"fallback alt" : "Assumed favicon for %s.",
+"fallback" : "Service suggested by source site",
+
+"bookmark" : "Please Bookmark",
+"bookmark title" : "Click to open bookmark URL, or click the bookmark button in your browser.",
+"bookmark alt" : "Bookmark icon (open book with bookmark)",
+
+"no default" : "Select handler each time",
+"no default tooltip" : "Clear default handler status.",
+"default tooltip" : "Set %s as the default handler for %s links.",
+"default rm" : "Remove %s as a handler for %s links."
 }

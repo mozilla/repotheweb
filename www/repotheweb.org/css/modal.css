@@ -1,0 +1,4 @@
+/* Common code for modal look, floats upon a surface. */
+body.modal {background: #fefcd6;} /* Faded yellow is both subtle and highlights the page. */
+#modal {background: white;}
+header {padding: 0;}

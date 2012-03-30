@@ -1,0 +1,25 @@
+<html>
+<head>
+	<title>Music Blog :: Repo!!!</title>
+	<script src="http://dev.repotheweb.org:8001/include.js"></script>
+	<style>
+		.link {
+			color: blue;
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<h1>Repo is COOL!!!!</h1>
+	<p>I've been linking to music using RepoTheWeb, and I just wanted to show off it's capabilities. Ofcourse it can do links, but it can also:</p>
+	<ul>
+		<li class="link" onclick="open('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b', 'music');">Works with window.open()</li>
+		<li class="link" onclick="location.assign('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b');">location.assign()</li>
+		<li class="link" onclick="location.replace('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b');">location.replace()</li>
+	</ul>
+	<p>And even iframes:</p>
+	<!-- <iframe src="music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b">
+		You should see the music protocol loading in here.
+	</iframe> --> <!-- The alert's distracting -->
+</body>
+</html>

@@ -1,8 +1,17 @@
 /* I have strived to make this a non-style and instead appear as part of the browser */
 /* Note the lack of font selection (or in code language selection), instead integrating into browser preferences. */
-li {list-style: none;}  /* use icons or radio buttons as bullets instead. */
+li {
+	list-style: none; /* use icons or radio buttons as bullets instead. */
+	margin: 5px; /* links stack up to closely otherwise. */
+	margin-left: 0;
+}  
 ul, ol {padding-left:0;} /* Do not indent lists, unclarifies the lists*/
 
+h2.url { /* avoids funny text-wrapping in URLs */
+	font-size: 90%;
+	text-wrap: unrestricted;
+}
+
 header {background: #dddddd; width: 100%;
-	padding: 10px;}  /*Seperate the title and config links from the page. Grey is the least brand-y color I can think of. */
+	padding: 10px; display: block;}  
 body {margin:0;}
