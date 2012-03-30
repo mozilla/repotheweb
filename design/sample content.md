@@ -72,3 +72,11 @@ This file represents a start to compiling sample content to design a scalable co
 	- pyofwave.info
 	- wave.google.com
 	- wavinabox.net
+
+- repo (decentralizes Git/Mercurial/Bazaar development even more)
+
+        - github.com
+        - code.google.com
+        - sourceforge.com
+        - launchpad.net
+        - bitbucket.org
